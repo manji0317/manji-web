@@ -4,9 +4,10 @@
 import { createRouter, createWebHistory, type Router } from 'vue-router';
 import { RouterWhite } from '@/router/router-white';
 import { setBeforeEachGuard, setAfterEachGuard } from '@/router/router-guard';
+import Layout from './router-menu';
 
 const router: Router = createRouter({
-  routes: [...RouterWhite],
+  routes: [...RouterWhite, ...Layout],
   history: createWebHistory(),
 });
 

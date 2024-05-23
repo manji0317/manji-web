@@ -39,9 +39,15 @@ httpApi.interceptors.response.use(
   },
   async (error) => {
     nProgress.done();
-    const { response, config } = error;
+    const { response, code, config } = error;
+    // 如果response为undefined，说明还没有到后台直接根据code提示错误信息
+    if (!response || response.status === 404) {
+      Message.error(t(`axiosError.${code}`));
+      return Promise.reject(error);
+    }
+
     // 如果不是401或403，则直接返回错误给业务代码处理
-    if (!response && ![401, 403].includes(response.status)) {
+    if (![401, 403].includes(response.status)) {
       return Promise.reject(error);
     }
 

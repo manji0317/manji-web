@@ -1,5 +1,7 @@
 <script setup lang="ts"></script>
 
-<template>Login</template>
+<template>
+    Role List
+</template>
 
 <style scoped></style>

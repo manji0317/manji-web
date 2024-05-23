@@ -6,12 +6,27 @@
  */
 
 import { RouteRecordRaw } from 'vue-router';
-import Login from "@/components/Login.vue";
+import Login from '@/components/Login.vue';
 
 export const RouterWhite: RouteRecordRaw[] = [
   {
-    path: '/',
-    component: Login,
+    path: '/:pathMatch(.*)*',
+    component: () => import('@/pages/error/Error404Page.vue'),
+  },
+  {
+    path: '/403',
+    component: () => import('@/pages/error/Error403Page.vue'),
+  },
+  {
+    path: '/login',
     name: 'login',
+    component: Login,
   },
 ];
+
+/**
+ * 获取白名单的路由path集合
+ */
+export const getWhitePaths = (): Array<string> => {
+  return RouterWhite.map((item) => item.path);
+};

@@ -7,12 +7,19 @@ export {}
 /* prettier-ignore */
 declare module 'vue' {
   export interface GlobalComponents {
+    BasicLayout: typeof import('./src/components/layout/Layout.vue')['default']
     ConfirmDialog: typeof import('./src/components/common/ConfirmDialog.vue')['default']
     Dialogs: typeof import('./src/components/common/Dialogs.vue')['default']
     HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
+    Layout: typeof import('./src/components/layouts/basic-layout/Layout.vue')['default']
+    Loading: typeof import('./src/components/common/LoadingDialog.vue')['default']
+    LoadingDialog: typeof import('./src/components/common/LoadingDialog.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
+    MAvatar: typeof import('./src/components/avatar/MAvatar.vue')['default']
     MessageQueue: typeof import('./src/components/common/MessageQueue.vue')['default']
     MTextField: typeof import('./src/components/input/MTextField.vue')['default']
+    NavCollapse: typeof import('./src/components/layouts/basic-layout/sidebar/NavCollapse.vue')['default']
+    NavItem: typeof import('./src/components/layouts/basic-layout/sidebar/NavItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     Snackbar: typeof import('./src/components/common/Snackbar.vue')['default']
