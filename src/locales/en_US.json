@@ -1,0 +1,87 @@
+{
+  "axiosError": {
+    "ECONNABORTED": "The connection was aborted. Please try again.",
+    "ERR_BAD_OPTION": "A bad option was provided. Please verify your settings and try again.",
+    "ERR_BAD_OPTION_VALUE": "An invalid option value was provided. Please check your settings and try again.",
+    "ERR_BAD_REQUEST": "There was an issue with your request. Please verify and try again.",
+    "ERR_BAD_RESPONSE": "We received an unexpected response from the server. Please try again later.",
+    "ERR_CANCELED": "Your request has been canceled. Please try again if this was a mistake.",
+    "ERR_DEPRECATED": "This feature is no longer supported. Please contact support for assistance.",
+    "ERR_FR_TOO_MANY_REDIRECTS": "We're experiencing too many redirects. Please try again later.",
+    "ERR_INVALID_URL": "The provided URL is invalid. Please check and try again.",
+    "ERR_NETWORK": "We are experiencing network issues. Please check your connection and try again.",
+    "ERR_NOT_SUPPORT": "This feature is not supported at the moment. Please contact support for further information.",
+    "ETIMEDOUT": "The request timed out. Please check your connection and try again."
+  },
+  "common": {
+    "account": "Account",
+    "actionConfirm": "Operation confirmation",
+    "actionSuccess": "Action Success",
+    "actions": "Actions",
+    "backHome": "Back Home",
+    "cancelText": "Cancel",
+    "confirmText": "Confim",
+    "createTime": "Create Time",
+    "dark": "Dark",
+    "deleteLoading": "Deleting ......",
+    "deleteText": "Delete",
+    "disable": "Disable",
+    "editText": "Edit",
+    "email": "Email",
+    "enable": "enable",
+    "english": "English",
+    "error403Description": "Sorry, you are not authorized to access this page. ",
+    "error404Description": "The page you are looking was moved, removed, <br />renamed, or might never exist! ",
+    "error404Title": "Something is wrong",
+    "languageSwitch": "Language switch",
+    "light": "Light",
+    "loadingText": "Loading ...",
+    "phone": "Phone",
+    "pleaseInput": "Please input {0}",
+    "pleaseSelect": "Please select {0}",
+    "saveText": "Save",
+    "simplifiedChinese": "Simplified Chinese",
+    "status": "Status",
+    "themeSwitching": "Theme Switching",
+    "updateLoading": "Updating......"
+  },
+  "fieldError": {
+    "max": "{0} cannot exceed {1} characters",
+    "required": "{0} cannot be empty"
+  },
+  "login": {
+    "buildingPage": "Building the page for you",
+    "forgotPassword": "Forgot password?",
+    "login": "Login",
+    "loginSuccess": "Login success",
+    "password": "Password",
+    "register": "Sign up now",
+    "tokenExpired": "Token expired please login again",
+    "username": "Username",
+    "usernameOrPasswordError": "Username or password error",
+    "usernameRetrievalError": "Unable to retrieve username. Please log in again."
+  },
+  "menu": {
+    "dashboard": "Dashboard",
+    "roleList": "Role List",
+    "userList": "User List",
+    "userManagement": "User Management"
+  },
+  "role": {
+    "actionRoleTitle": "Action Role",
+    "addRole": "Create Role",
+    "description": "Role Description",
+    "editMenu": "Edit Menu",
+    "name": "Role Name"
+  },
+  "user": {
+    "avatar": "Avatar",
+    "birthday": "Birthday",
+    "editRole": "Edit Role",
+    "gender": "Gender",
+    "man": "Man",
+    "nickname": "Nickname",
+    "userDeleteConfirm": "Are you sure you want to delete the {0} user?",
+    "woman": "Woman"
+  }
+}

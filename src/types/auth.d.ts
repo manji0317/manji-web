@@ -12,9 +12,15 @@ declare interface Menu {
   id: string,
 }
 
+declare interface Role {
+  id: number;
+  roleName: string;
+  description: string;
+}
+
 declare interface AuthUser {
   id: number;
-  nickname?: string;
+  nickname: string;
   username: string;
   email: string;
   phone: string;

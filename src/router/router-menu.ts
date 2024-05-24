@@ -1,7 +1,4 @@
 import type { CustomRouteRecordRaw, RouteRecordRaw } from 'vue-router';
-import i18n from '@/plugins/i18n';
-
-const { t } = i18n.global;
 
 export const Menus: CustomRouteRecordRaw[] = [
   {
@@ -10,7 +7,7 @@ export const Menus: CustomRouteRecordRaw[] = [
     component: () => import('@/pages/dashboard/index.vue'),
     meta: {
       id: '1',
-      title: t('menu.dashboard'),
+      title: 'menu.dashboard',
       icon: 'mdi-view-dashboard',
     },
   },
@@ -19,7 +16,7 @@ export const Menus: CustomRouteRecordRaw[] = [
     name: 'user-management',
     meta: {
       id: '2',
-      title: t('menu.userManagement'),
+      title: 'menu.userManagement',
       icon: 'mdi-account-box',
     },
     children: [
@@ -29,7 +26,7 @@ export const Menus: CustomRouteRecordRaw[] = [
         component: () => import('@/pages/user-management/user-list/index.vue'),
         meta: {
           id: '3',
-          title: t('menu.userList'),
+          title: 'menu.userList',
           icon: 'mdi-card-account-details',
         },
       },
@@ -39,7 +36,7 @@ export const Menus: CustomRouteRecordRaw[] = [
         component: () => import('@/pages/user-management/role-list/index.vue'),
         meta: {
           id: '4',
-          title: t('menu.roleList'),
+          title: 'menu.roleList',
           icon: 'mdi-list-box',
         },
       },

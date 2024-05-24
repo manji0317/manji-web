@@ -1,0 +1,87 @@
+{
+  "axiosError": {
+    "ECONNABORTED": "连接已中止。请重试。",
+    "ERR_BAD_OPTION": "提供了错误的选项。请验证您的设置并重试。",
+    "ERR_BAD_OPTION_VALUE": "提供了无效的选项值。请检查您的设置并重试。",
+    "ERR_BAD_REQUEST": "您的请求有问题。请验证后重试。",
+    "ERR_BAD_RESPONSE": "我们从服务器收到了意外的响应。请稍后再试。",
+    "ERR_CANCELED": "您的请求已被取消。如果这是一个错误，请重试。",
+    "ERR_DEPRECATED": "此功能不再受支持。请联系支持人员以获取帮助。",
+    "ERR_FR_TOO_MANY_REDIRECTS": "我们遇到了太多的重定向。请稍后再试。",
+    "ERR_INVALID_URL": "提供的URL无效。请检查并重试。",
+    "ERR_NETWORK": "我们遇到了网络问题。请检查您的连接并重试。",
+    "ERR_NOT_SUPPORT": "目前不支持此功能。请联系支持人员以获取更多信息。",
+    "ETIMEDOUT": "请求超时。请检查您的连接并重试。"
+  },
+  "common": {
+    "account": "账号",
+    "actionConfirm": "操作确认",
+    "actionSuccess": "操作成功",
+    "actions": "操作",
+    "backHome": "返回首页",
+    "cancelText": "取消",
+    "confirmText": "确认",
+    "createTime": "创建时间",
+    "dark": "暗色主题",
+    "deleteLoading": "删除中 ......",
+    "deleteText": "删除",
+    "disable": "禁用",
+    "editText": "修改",
+    "email": "邮箱",
+    "enable": "启用",
+    "english": "英文",
+    "error403Description": "抱歉，您无权访问此页面。",
+    "error404Description": "您正在查看的页面已被移动、删除、<br/>重命名，或者可能永远不存在!",
+    "error404Title": "有点不对劲",
+    "languageSwitch": "语言切换",
+    "light": "浅色主题",
+    "loadingText": "加载中...",
+    "phone": "电话",
+    "pleaseInput": "请输入{0}",
+    "pleaseSelect": "请选择{0}",
+    "saveText": "保存",
+    "simplifiedChinese": "简体中文",
+    "status": "状态",
+    "themeSwitching": "主题切换",
+    "updateLoading": "更新中......"
+  },
+  "fieldError": {
+    "max": "{0}不能超过{1}个字符",
+    "required": "{0}不能为空"
+  },
+  "login": {
+    "buildingPage": "正在为您构建页面",
+    "forgotPassword": "忘记密码?",
+    "login": "登录",
+    "loginSuccess": "登录成功",
+    "password": "密码",
+    "register": "注册",
+    "tokenExpired": "Token令牌过期请重新登录",
+    "username": "用户名",
+    "usernameOrPasswordError": "用户名或密码错误",
+    "usernameRetrievalError": "无法检索用户名。请重新登录。"
+  },
+  "menu": {
+    "dashboard": "仪表盘",
+    "roleList": "权限列表",
+    "userList": "用户列表",
+    "userManagement": "用户管理"
+  },
+  "role": {
+    "actionRoleTitle": "操作角色",
+    "addRole": "创建角色",
+    "description": "角色描述",
+    "editMenu": "编辑菜单",
+    "name": "角色名称"
+  },
+  "user": {
+    "avatar": "头像",
+    "birthday": "生日",
+    "editRole": "编辑角色",
+    "gender": "性别",
+    "man": "男人",
+    "nickname": "昵称",
+    "userDeleteConfirm": "确认要删除{0}用户么？",
+    "woman": "女人"
+  }
+}

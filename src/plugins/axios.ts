@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { Message } from '@/plugins/vuetify-global';
 import i18n from './i18n';
-import { getAccessToken, setAccessToken } from '@/utils/TokenUtil';
+import { getAccessToken, removeToken, setAccessToken } from '@/utils/TokenUtil';
 import { refreshToken } from '@/api/auth.api';
 import nProgress from 'nprogress';
+import router from '@/router/index';
+import Qs from 'qs';
 
 const { t } = i18n.global;
 // 是否正在刷新Token标识
@@ -15,6 +17,9 @@ let retryQueue: Array<(token: string) => void> = [];
 const httpApi = axios.create({
   baseURL: import.meta.env.VITE_SERVICE_API,
   timeout: 10000,
+  paramsSerializer: (params) => {
+    return Qs.stringify(params, {encode: true, allowDots: true, arrayFormat: 'indices'});
+  }
 });
 
 // 添加请求拦截器
@@ -60,7 +65,9 @@ httpApi.interceptors.response.use(
     // 如果刷新Token的接口返回的401，需要重新登录
     if (config.url === '/auth/refreshToken') {
       isRefreshToken = false;
+      removeToken();
       Message.error(t('login.tokenExpired'));
+      await router.push('/login');
       return Promise.reject(error);
     }
 

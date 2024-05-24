@@ -1,7 +1,8 @@
 import httpApi from '@/plugins/axios';
+import { UserListCondition } from '@/pages/user-management/user-list/index.data';
 
 const API = {
-  GET_USER_BASIC_INFO: '/user/get/',
+  USER_ACTION: '/user/',
   GET_USER_LIST: '/user/getUserList',
 };
 
@@ -9,12 +10,28 @@ const API = {
  * 获取用户信息（菜单数据、基本信息）
  */
 export const getUserInfo = (username: string) => {
-  return httpApi.get<AuthUser>(`${API.GET_USER_BASIC_INFO}${username}`);
+  return httpApi.get<AuthUser>(`${API.USER_ACTION}${username}`);
 };
 
 /**
  * 查询用户列表数据
  */
-export const getUserList = () => {
-  return httpApi.get<SysUser[]>(API.GET_USER_LIST);
+export const getUserList = (condition: UserListCondition) => {
+  return httpApi.get<PageResult<SysUser>>(API.GET_USER_LIST, {
+    params: condition,
+  });
+};
+
+/**
+ * 根据用户ID删除用户
+ */
+export const deleteUserById = (userId: number) => {
+  return httpApi.delete(`${API.USER_ACTION}${userId}`);
+};
+
+/**
+ * 根据用户ID删除用户
+ */
+export const updateUserById = (userId: number, data: Partial<SysUser>) => {
+  return httpApi.patch(`${API.USER_ACTION}${userId}`, data);
 };

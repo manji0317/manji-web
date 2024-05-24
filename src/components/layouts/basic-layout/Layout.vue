@@ -7,13 +7,12 @@
   import { getUserInfo } from '@/api/user.api';
   import { CustomRouteRecordRaw, useRouter } from 'vue-router';
   import { checkRoutePermission, findMenuItemsByIds } from '@/utils/MenuUtil';
-  import {useAuthStore} from "@/store/authStore";
+  import { useAuthStore } from '@/store/authStore';
 
   const themeInstance = useTheme();
   const { t, locale } = useI18n();
   const router = useRouter();
   const authStore = useAuthStore();
-
   // 用户菜单数据
   const userMenus = ref<CustomRouteRecordRaw[]>([]);
   // 是否展开侧边菜单
@@ -74,58 +73,58 @@
 </script>
 
 <template>
-<v-app>
-  <v-navigation-drawer :rail="sidebarDrawer" permanent expand-on-hover width="350">
-    <!-- 菜单区域 -->
-    <v-list nav>
-      <template v-for="item in userMenus" :key="item.meta.id">
-        <!-- 是否有子菜单 -->
-        <NavCollapse :item="item" v-if="item.children" />
+  <v-app>
+    <v-navigation-drawer :rail="sidebarDrawer" permanent expand-on-hover width="350">
+      <!-- 菜单区域 -->
+      <v-list nav>
+        <template v-for="item in userMenus" :key="item.meta.id">
+          <!-- 是否有子菜单 -->
+          <NavCollapse :item="item" v-if="item.children" />
 
-        <!-- 渲染Item -->
-        <NavItem :item="item" v-else />
+          <!-- 渲染Item -->
+          <NavItem :item="item" v-else />
+        </template>
+      </v-list>
+    </v-navigation-drawer>
+
+    <v-app-bar>
+      <v-app-bar-nav-icon @click="sidebarDrawer = !sidebarDrawer" />
+      <template v-slot:append>
+        <!-- 主题切换 -->
+        <v-menu location="bottom">
+          <template v-slot:activator="{ props }">
+            <v-btn icon="mdi-theme-light-dark" v-bind="props" />
+          </template>
+          <v-list density="compact" rounded="lg">
+            <v-list-subheader>{{ $t('common.themeSwitching') }}</v-list-subheader>
+            <v-list-item v-for="(item, index) in themes" :key="index" rounded="lg" @click="handleChangeTheme(item.value)">
+              <template v-slot:prepend>
+                <v-icon :icon="item.icon" />
+              </template>
+              <v-list-item-title v-text="item.title" />
+            </v-list-item>
+          </v-list>
+        </v-menu>
+
+        <!-- 国际化切换 -->
+        <v-menu location="bottom">
+          <template v-slot:activator="{ props }">
+            <v-btn icon="mdi-translate-variant" v-bind="props" />
+          </template>
+          <v-list density="compact" rounded="lg">
+            <v-list-subheader>{{ $t('common.languageSwitch') }}</v-list-subheader>
+            <v-list-item v-for="(item, index) in locales" :key="index" rounded="lg" @click="handleChangeLocale(item.value)">
+              <v-list-item-title v-text="item.title" />
+            </v-list-item>
+          </v-list>
+        </v-menu>
       </template>
-    </v-list>
-  </v-navigation-drawer>
+    </v-app-bar>
 
-  <v-app-bar>
-    <v-app-bar-nav-icon @click="sidebarDrawer = !sidebarDrawer" />
-    <template v-slot:append>
-      <!-- 主题切换 -->
-      <v-menu location="bottom">
-        <template v-slot:activator="{ props }">
-          <v-btn icon="mdi-theme-light-dark" v-bind="props" />
-        </template>
-        <v-list density="compact" rounded="lg">
-          <v-list-subheader>{{ $t('common.themeSwitching') }}</v-list-subheader>
-          <v-list-item v-for="(item, index) in themes" :key="index" rounded="lg" @click="handleChangeTheme(item.value)">
-            <template v-slot:prepend>
-              <v-icon :icon="item.icon" />
-            </template>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item>
-        </v-list>
-      </v-menu>
-
-      <!-- 国际化切换 -->
-      <v-menu location="bottom">
-        <template v-slot:activator="{ props }">
-          <v-btn icon="mdi-translate-variant" v-bind="props" />
-        </template>
-        <v-list density="compact" rounded="lg">
-          <v-list-subheader>{{ $t('common.languageSwitch') }}</v-list-subheader>
-          <v-list-item v-for="(item, index) in locales" :key="index" rounded="lg" @click="handleChangeLocale(item.value)">
-            <v-list-item-title v-text="item.title" />
-          </v-list-item>
-        </v-list>
-      </v-menu>
-    </template>
-  </v-app-bar>
-
-  <v-main>
-    <router-view />
-  </v-main>
-</v-app>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 
 <style scoped></style>

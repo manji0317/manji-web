@@ -22,7 +22,7 @@
           <v-icon :icon="item.meta.icon" />
         </template>
         <!---菜单名字  -->
-        <v-list-item-title class="mr-auto">{{ item.meta.title }}</v-list-item-title>
+        <v-list-item-title v-text="$t(item.meta.title)" class="mr-auto"/>
         <!-- 副标题 -->
         <v-list-item-subtitle v-if="item.meta.subCaption" class="text-caption mt-n1">
           {{ item.meta.subCaption }}

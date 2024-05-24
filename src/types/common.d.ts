@@ -1,6 +1,13 @@
-declare interface Result<T = any> {
-  data?: T;
-  success: boolean;
-  code: number;
-  message?: string;
+declare interface Page {
+  page: number,
+  itemPrePage: number,
+  sortBy?: [],
+}
+
+declare interface PageResult<T> {
+  records: T[],
+  total: number,
+  size: number,
+  current: number,
+  pages: number,
 }
