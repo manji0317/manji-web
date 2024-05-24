@@ -33,6 +33,7 @@
     "error403Description": "Sorry, you are not authorized to access this page. ",
     "error404Description": "The page you are looking was moved, removed, <br />renamed, or might never exist! ",
     "error404Title": "Something is wrong",
+    "executing": "executing......",
     "languageSwitch": "Language switch",
     "light": "Light",
     "loadingText": "Loading ...",

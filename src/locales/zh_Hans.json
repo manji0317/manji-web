@@ -33,6 +33,7 @@
     "error403Description": "抱歉，您无权访问此页面。",
     "error404Description": "您正在查看的页面已被移动、删除、<br/>重命名，或者可能永远不存在!",
     "error404Title": "有点不对劲",
+    "executing": "执行中......",
     "languageSwitch": "语言切换",
     "light": "浅色主题",
     "loadingText": "加载中...",

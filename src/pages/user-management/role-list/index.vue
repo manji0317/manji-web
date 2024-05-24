@@ -7,6 +7,7 @@
   // 角色列表加载标识
   const roleTableLoading = ref(false);
   const roleDialogVisible = ref(false);
+  const currentRoleId = ref<string | undefined>('');
   // 查询条件
   const condition = reactive<Page>({
     page: 1,
@@ -35,19 +36,20 @@
       });
   };
 
-  // 除了操作角色
-  const handleActionRole = () => {
+  // 操作角色
+  const handleActionRole = (roleId?: string) => {
+    currentRoleId.value = roleId;
     roleDialogVisible.value = true;
   };
 </script>
 
 <template>
   <!-- 操作角色弹窗 -->
-  <action-role-dialog v-model="roleDialogVisible" />
+  <action-role-dialog v-model="roleDialogVisible" @update:model-value="() => currentRoleId = ''" @reload:data-list="loadRoleListData" :role-id="currentRoleId" />
 
   <v-card class="ma-10">
     <template #text>
-      <v-btn prepend-icon="mdi-star-plus" color="primary" @click="handleActionRole">{{ $t('role.addRole') }}</v-btn>
+      <v-btn prepend-icon="mdi-star-plus" color="primary" @click="handleActionRole('')">{{ $t('role.addRole') }}</v-btn>
     </template>
     <!-- User 数据表格 -->
     <v-data-table-server
@@ -65,7 +67,7 @@
       @update:options="loadRoleListData"
     >
       <template #[`item.actions`]="{ item }">
-        <v-btn icon="mdi-pencil" color="primary" variant="text" />
+        <v-btn icon="mdi-pencil" color="primary" variant="text" @click="handleActionRole(item.id)" />
         <v-btn icon="mdi-delete-alert" color="warning" variant="text" />
       </template>
     </v-data-table-server>

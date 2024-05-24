@@ -8,12 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionRoleDialog: typeof import('./src/components/user-managment/role/ActionRoleDialog.vue')['default']
-    BasicLayout: typeof import('./src/components/layout/Layout.vue')['default']
     ConfirmDialog: typeof import('./src/components/common/ConfirmDialog.vue')['default']
-    Dialogs: typeof import('./src/components/common/Dialogs.vue')['default']
-    HelloWorld: typeof import('./src/components/HelloWorld.vue')['default']
     Layout: typeof import('./src/components/layouts/basic-layout/Layout.vue')['default']
-    Loading: typeof import('./src/components/common/LoadingDialog.vue')['default']
     LoadingDialog: typeof import('./src/components/common/LoadingDialog.vue')['default']
     Login: typeof import('./src/components/Login.vue')['default']
     MAvatar: typeof import('./src/components/avatar/MAvatar.vue')['default']
@@ -24,8 +20,5 @@ declare module 'vue' {
     NavItem: typeof import('./src/components/layouts/basic-layout/sidebar/NavItem.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Snackbar: typeof import('./src/components/common/Snackbar.vue')['default']
-    Snackbars: typeof import('@/components/common/Snackbar.vue')['default']
-    SnackbarV2: typeof import('./src/components/common/SnackbarV2.vue')['default']
   }
 }

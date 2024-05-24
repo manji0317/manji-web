@@ -8,14 +8,11 @@ declare interface Token {
   refreshToken: string;
 }
 
-declare interface Menu {
-  id: string,
-}
-
 declare interface Role {
-  id: number;
+  id: string;
   roleName: string;
   description: string;
+  menus?: string[];
 }
 
 declare interface AuthUser {
@@ -28,7 +25,7 @@ declare interface AuthUser {
   menuIds: string[];
 }
 
-declare interface SysUser extends Omit<AuthUser, 'menuIds'>{
+declare interface SysUser extends Omit<AuthUser, 'menuIds'> {
   gender: number;
   birthday: string;
   status: number;

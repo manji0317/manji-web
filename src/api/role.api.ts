@@ -1,7 +1,7 @@
 import httpApi from '@/plugins/axios';
 
 const API = {
-  ROLE_ACTION: '/role/',
+  ROLE_ACTION: '/role',
   GET_ROLE_LIST: '/role/getRoleList',
 };
 
@@ -11,6 +11,24 @@ const API = {
  */
 export const getRoleList = (condition: Page) => {
   return httpApi.get<PageResult<Role>>(API.GET_ROLE_LIST, {
-    params: condition
+    params: condition,
   });
+};
+
+/**
+ * 创建角色信息
+ */
+export const roleAction = (role: Required<Role>) => {
+  if (role.id) {
+    // id有值走更新
+    return httpApi.patch(API.ROLE_ACTION, role);
+  }
+  return httpApi.post(API.ROLE_ACTION, role);
+};
+
+/**
+ * 跟ID获取角色信息
+ */
+export const getRoleById = (roleId: string) => {
+  return httpApi.get<Role>(`${API.ROLE_ACTION}/${roleId}`);
 };
