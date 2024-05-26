@@ -37,9 +37,11 @@
     "languageSwitch": "语言切换",
     "light": "浅色主题",
     "loadingText": "加载中...",
+    "next": "下一步",
     "phone": "电话",
     "pleaseInput": "请输入{0}",
     "pleaseSelect": "请选择{0}",
+    "previous": "上一步",
     "saveText": "保存",
     "simplifiedChinese": "简体中文",
     "status": "状态",
@@ -47,6 +49,7 @@
     "updateLoading": "更新中......"
   },
   "fieldError": {
+    "emailValid": "邮箱格式不正确",
     "max": "{0}不能超过{1}个字符",
     "required": "{0}不能为空"
   },
@@ -71,18 +74,22 @@
   "role": {
     "actionRoleTitle": "操作角色",
     "addRole": "创建角色",
+    "deleteRoleConfirmContent": "确定要删除{0}角色吗？",
     "description": "角色描述",
     "editMenu": "编辑菜单",
     "name": "角色名称"
   },
   "user": {
+    "addUser": "新增用户",
     "avatar": "头像",
     "birthday": "生日",
     "editRole": "编辑角色",
     "gender": "性别",
     "man": "男人",
     "nickname": "昵称",
+    "userAction": "操作用户",
     "userDeleteConfirm": "确认要删除{0}用户么？",
+    "userInfo": "用户信息",
     "woman": "女人"
   }
 }

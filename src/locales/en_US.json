@@ -37,9 +37,11 @@
     "languageSwitch": "Language switch",
     "light": "Light",
     "loadingText": "Loading ...",
+    "next": "Next",
     "phone": "Phone",
     "pleaseInput": "Please input {0}",
     "pleaseSelect": "Please select {0}",
+    "previous": "Previous",
     "saveText": "Save",
     "simplifiedChinese": "Simplified Chinese",
     "status": "Status",
@@ -47,6 +49,7 @@
     "updateLoading": "Updating......"
   },
   "fieldError": {
+    "emailValid": "The mailbox is incorrectly formatted",
     "max": "{0} cannot exceed {1} characters",
     "required": "{0} cannot be empty"
   },
@@ -71,18 +74,22 @@
   "role": {
     "actionRoleTitle": "Action Role",
     "addRole": "Create Role",
+    "deleteRoleConfirmContent": "Are you sure you want to delete the {0} role?",
     "description": "Role Description",
     "editMenu": "Edit Menu",
     "name": "Role Name"
   },
   "user": {
+    "addUser": "Add User",
     "avatar": "Avatar",
     "birthday": "Birthday",
     "editRole": "Edit Role",
     "gender": "Gender",
     "man": "Man",
     "nickname": "Nickname",
+    "userAction": "Action User",
     "userDeleteConfirm": "Are you sure you want to delete the {0} user?",
+    "userInfo": "User Info",
     "woman": "Woman"
   }
 }

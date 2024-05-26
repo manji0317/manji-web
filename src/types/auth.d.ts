@@ -16,7 +16,7 @@ declare interface Role {
 }
 
 declare interface AuthUser {
-  id: number;
+  id: string;
   nickname: string;
   username: string;
   email: string;
@@ -26,6 +26,7 @@ declare interface AuthUser {
 }
 
 declare interface SysUser extends Omit<AuthUser, 'menuIds'> {
+  password: string;
   gender: number;
   birthday: string;
   status: number;

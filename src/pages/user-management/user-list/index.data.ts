@@ -49,7 +49,7 @@ export const TableHeader = computed<TableHeaderType>(() => [
   {
     title: t('common.createTime'),
     key: 'createTime',
-    minWidth: '180'
+    minWidth: '180',
   },
   { title: t('common.actions'), key: 'actions', sortable: false, minWidth: '180' },
 ]);
@@ -58,5 +58,5 @@ export const TableHeader = computed<TableHeaderType>(() => [
  * 表格查询条件
  */
 export interface UserListCondition extends Page {
-  search: string
+  search: string;
 }

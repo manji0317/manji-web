@@ -3,7 +3,7 @@
  */
 import { createRouter, createWebHistory, type Router } from 'vue-router';
 import { RouterWhite } from '@/router/router-white';
-import { setBeforeEachGuard, setAfterEachGuard } from '@/router/router-guard';
+import { setBeforeEachGuard } from '@/router/router-guard';
 import Layout from './router-menu';
 
 const router: Router = createRouter({
@@ -15,6 +15,6 @@ const router: Router = createRouter({
 setBeforeEachGuard(router);
 
 // 路由后置拦截处理
-setAfterEachGuard(router);
+// setAfterEachGuard(router);
 
 export default router;

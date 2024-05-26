@@ -8,6 +8,7 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ActionRoleDialog: typeof import('./src/components/user-managment/role/ActionRoleDialog.vue')['default']
+    ActionUserDialog: typeof import('./src/components/user-managment/user/ActionUserDialog.vue')['default']
     ConfirmDialog: typeof import('./src/components/common/ConfirmDialog.vue')['default']
     Layout: typeof import('./src/components/layouts/basic-layout/Layout.vue')['default']
     LoadingDialog: typeof import('./src/components/common/LoadingDialog.vue')['default']

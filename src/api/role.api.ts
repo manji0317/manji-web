@@ -21,7 +21,7 @@ export const getRoleList = (condition: Page) => {
 export const roleAction = (role: Required<Role>) => {
   if (role.id) {
     // id有值走更新
-    return httpApi.patch(API.ROLE_ACTION, role);
+    return httpApi.patch(`${API.ROLE_ACTION}/${role.id}`, role);
   }
   return httpApi.post(API.ROLE_ACTION, role);
 };
@@ -31,4 +31,11 @@ export const roleAction = (role: Required<Role>) => {
  */
 export const getRoleById = (roleId: string) => {
   return httpApi.get<Role>(`${API.ROLE_ACTION}/${roleId}`);
+};
+
+/**
+ * 根据ID删除角色
+ */
+export const removeRoleById = (roleId: string) => {
+  return httpApi.delete(`${API.ROLE_ACTION}/${roleId}`);
 };

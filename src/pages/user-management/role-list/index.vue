@@ -1,9 +1,12 @@
 <script setup lang="ts">
   import { TableHeader } from '@/pages/user-management/role-list/index.data';
   import { reactive, ref } from 'vue';
-  import { getRoleList } from '@/api/role.api';
+  import { getRoleList, removeRoleById } from '@/api/role.api';
   import ActionRoleDialog from '@/components/user-managment/role/ActionRoleDialog.vue';
+  import { Confirm, Message } from '@/plugins/vuetify-global';
+  import { useI18n } from 'vue-i18n';
 
+  const { t } = useI18n();
   // 角色列表加载标识
   const roleTableLoading = ref(false);
   const roleDialogVisible = ref(false);
@@ -41,16 +44,41 @@
     currentRoleId.value = roleId;
     roleDialogVisible.value = true;
   };
+
+  // 删除角色
+  const handleRemoveRole = (roleId: string, roleName: string) => {
+    Confirm.show({
+      title: t('common.actionConfirm'),
+      content: t('role.deleteRoleConfirmContent', [roleName]),
+      titleColor: 'warning',
+      onConfirm() {
+        roleTableLoading.value = true;
+        removeRoleById(roleId)
+          .then((res) => {
+            if (res.status === 200) {
+              Message.success(t('common.actionSuccess'));
+              loadRoleListData();
+            }
+          })
+          .finally(() => (roleTableLoading.value = false));
+      },
+    });
+  };
 </script>
 
 <template>
-  <!-- 操作角色弹窗 -->
-  <action-role-dialog v-model="roleDialogVisible" @update:model-value="() => currentRoleId = ''" @reload:data-list="loadRoleListData" :role-id="currentRoleId" />
+  <!-- 操作角色弹窗  @update:model-value 是为了清空currentRoleId 如不清空不会出发组件内watchEffect-->
+  <action-role-dialog
+    v-model="roleDialogVisible"
+    @update:model-value="() => (currentRoleId = '')"
+    @reload:data-list="loadRoleListData"
+    :role-id="currentRoleId"
+  />
 
   <v-card class="ma-10">
-    <template #text>
+    <v-card-actions>
       <v-btn prepend-icon="mdi-star-plus" color="primary" @click="handleActionRole('')">{{ $t('role.addRole') }}</v-btn>
-    </template>
+    </v-card-actions>
     <!-- User 数据表格 -->
     <v-data-table-server
       :header-props="{ align: 'center' }"
@@ -68,7 +96,7 @@
     >
       <template #[`item.actions`]="{ item }">
         <v-btn icon="mdi-pencil" color="primary" variant="text" @click="handleActionRole(item.id)" />
-        <v-btn icon="mdi-delete-alert" color="warning" variant="text" />
+        <v-btn icon="mdi-delete-alert" color="warning" variant="text" @click="handleRemoveRole(item.id, item.roleName)" />
       </template>
     </v-data-table-server>
   </v-card>

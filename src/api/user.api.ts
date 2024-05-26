@@ -25,13 +25,13 @@ export const getUserList = (condition: UserListCondition) => {
 /**
  * 根据用户ID删除用户
  */
-export const deleteUserById = (userId: number) => {
+export const deleteUserById = (userId: string) => {
   return httpApi.delete(`${API.USER_ACTION}${userId}`);
 };
 
 /**
  * 根据用户ID删除用户
  */
-export const updateUserById = (userId: number, data: Partial<SysUser>) => {
+export const updateUserById = (userId: string, data: Partial<SysUser>) => {
   return httpApi.patch(`${API.USER_ACTION}${userId}`, data);
 };

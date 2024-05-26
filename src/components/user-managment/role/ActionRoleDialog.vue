@@ -26,7 +26,9 @@
   const { handleSubmit, errors, defineField, resetForm } = useForm<Role>({
     validationSchema: object({
       roleName: string().required(t('fieldError.required', [t('role.name')])),
-      description: string().nullable().max(50, t('fieldError.max', [t('role.description'), 50])),
+      description: string()
+        .nullable()
+        .max(50, t('fieldError.max', [t('role.description'), 50])),
     }),
   });
 
@@ -94,7 +96,7 @@
 <template>
   <v-dialog persistent max-width="500">
     <v-card flat>
-      <v-toolbar>
+      <v-toolbar height="50">
         <v-toolbar-title>{{ $t('role.actionRoleTitle') }}</v-toolbar-title>
         <v-toolbar-items>
           <v-btn variant="text" icon="mdi-close" @click="handleClose" />

@@ -6,7 +6,7 @@
 
 <template>
   <v-avatar v-bind="$attrs" class="ma-1">
-    <v-img v-if="!!avatar" :lazy-src="avatar" :src="avatar" height="64" cover>
+    <v-img v-if="!!avatar" :lazy-src="avatar" :src="avatar" height="48" cover>
       <!-- 图片加载等待 -->
       <template #placeholder>
         <v-row align="center" justify="center" class="fill-height ma-0">
@@ -21,7 +21,7 @@
         </v-row>
       </template>
     </v-img>
-    <v-icon v-else color="grey" size="64" icon="mdi-account-circle" />
+    <v-icon v-else color="grey" size="48" icon="mdi-account-circle" />
   </v-avatar>
 </template>
 
