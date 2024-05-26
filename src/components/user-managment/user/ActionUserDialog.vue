@@ -3,6 +3,9 @@
   import { useForm } from 'vee-validate';
   import { object, string } from 'yup';
   import { useI18n } from 'vue-i18n';
+  import { toTypedSchema } from '@vee-validate/yup';
+  import { getRoleList } from '@/api/role.api';
+  import { Loading } from '@/plugins/vuetify-global';
 
   const { t } = useI18n();
   const emits = defineEmits(['update:modelValue']);
@@ -12,14 +15,20 @@
 
   // 表单校验
   const { handleSubmit, defineField, errors } = useForm<SysUser>({
-    validationSchema: object({
-      nickname: string().required(t('fieldError.required', [t('user.nickname')])),
-      username: string().required(t('fieldError.required', [t('common.account')])),
-      password: string().required(t('fieldError.required', [t('login.password')])),
-      email: string()
-        .required(t('fieldError.required', [t('common.email')]))
-        .email(t('fieldError.emailValid')),
-    }),
+    validationSchema: toTypedSchema(
+      object({
+        nickname: string().required(t('fieldError.required', [t('user.nickname')])),
+        username: string().required(t('fieldError.required', [t('common.account')])),
+        password: string().required(t('fieldError.required', [t('login.password')])),
+        email: string()
+          .required(t('fieldError.required', [t('common.email')]))
+          .email(t('fieldError.emailValid')),
+      })
+    ),
+    initialValues: {
+      gender: 1,
+      status: 1,
+    },
   });
 
   const [nickname] = defineField('nickname');
@@ -33,6 +42,9 @@
 
   // 选择的菜单集合
   const selectMenuIds = ref<string[]>([]);
+  // 角色列表
+  const roleList = ref<Role[]>([]);
+  const selectRoleIds = ref<string[]>([]);
   const props = defineProps({
     userId: String,
   });
@@ -47,9 +59,19 @@
   const handleSaveUserInfo = () => {};
 
   // 点击Next处理
-  const handleNext = handleSubmit((values: SysUser) => {
+  const handleNext = () => {
     step.value += 1;
-  });
+
+    // 加载角色列表
+    Loading.loading(t('role.loadingRoleList'));
+    getRoleList()
+      .then((res) => {
+        if (res.status === 200) {
+          roleList.value = res.data;
+        }
+      })
+      .finally(() => Loading.close());
+  };
 </script>
 
 <template>
@@ -71,18 +93,36 @@
               <v-text-field :label="$t('user.nickname')" v-model="nickname" :error-messages="errors.nickname" />
               <v-text-field :label="$t('common.account')" v-model="username" :error-messages="errors.username" />
               <v-text-field :label="$t('login.password')" v-model="password" :error-messages="errors.password" />
-              <v-text-field :label="$t('user.gender')" v-model="gender" />
-              <v-text-field :label="$t('user.birthday')" v-model="birthday" type="date" />
+              <v-radio-group inline :label="$t('user.gender')" v-model="gender">
+                <v-radio :label="$t('user.man')" :value="1" color="primary" />
+                <v-radio :label="$t('user.woman')" :value="2" color="red" />
+              </v-radio-group>
+              <v-text-field type="date" prepend-inner-icon="$calendar" :label="$t('user.birthday')" v-model="birthday" clearable />
               <v-text-field :label="$t('common.email')" v-model="email" :error-messages="errors.email" />
               <v-text-field :label="$t('common.phone')" v-model="phone" />
-              <v-text-field :label="$t('common.status')" v-model="status" />
+              <v-radio-group inline :label="$t('common.status')" v-model="status">
+                <v-radio :label="$t('common.enable')" :value="1" color="primary" />
+                <v-radio :label="$t('common.disable')" :value="2" color="red" />
+              </v-radio-group>
             </v-form>
           </v-window-item>
-          <v-window-item :value="2">
+          <v-window-item :value="2" class="position-relative">
             <!-- 角色集合 -->
+            <v-card-text>
+              <h2 class="text-h6 mb-2">{{ $t('user.roleSelect') }}</h2>
 
+              <v-chip-group multiple column v-model="selectRoleIds">
+                <v-chip v-for="(item, index) in roleList" :key="index" color="success" filter>
+                  {{ $t(item.roleName) }}
+                </v-chip>
+              </v-chip-group>
+            </v-card-text>
             <!-- 菜单集合 -->
-            <menu-select-chip v-model="selectMenuIds" />
+            <v-card-text>
+              <h2 class="text-h6 mb-2">{{ $t('user.menuSelect') }}</h2>
+
+              <menu-select-chip v-model="selectMenuIds" />
+            </v-card-text>
           </v-window-item>
         </v-window>
       </v-card-text>

@@ -2,17 +2,25 @@ import httpApi from '@/plugins/axios';
 
 const API = {
   ROLE_ACTION: '/role',
+  GET_ROLE_PAGE_LIST: '/role/getRolePageList',
   GET_ROLE_LIST: '/role/getRoleList',
 };
 
 /**
- * 获取角色列表
+ * 获取角色列表 (分页数据)
  * @param condition 分页查询数据
  */
-export const getRoleList = (condition: Page) => {
-  return httpApi.get<PageResult<Role>>(API.GET_ROLE_LIST, {
+export const getRolePageList = (condition: Page) => {
+  return httpApi.get<PageResult<Role>>(API.GET_ROLE_PAGE_LIST, {
     params: condition,
   });
+};
+
+/**
+ * 获取角色列表
+ */
+export const getRoleList = () => {
+  return httpApi.get<Role[]>(API.GET_ROLE_LIST);
 };
 
 /**

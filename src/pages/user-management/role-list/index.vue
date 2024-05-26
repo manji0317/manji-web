@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { TableHeader } from '@/pages/user-management/role-list/index.data';
   import { reactive, ref } from 'vue';
-  import { getRoleList, removeRoleById } from '@/api/role.api';
+  import { getRolePageList, removeRoleById } from '@/api/role.api';
   import ActionRoleDialog from '@/components/user-managment/role/ActionRoleDialog.vue';
   import { Confirm, Message } from '@/plugins/vuetify-global';
   import { useI18n } from 'vue-i18n';
@@ -30,7 +30,7 @@
   // 加载角色列表数据
   const loadRoleListData = () => {
     roleTableLoading.value = true;
-    getRoleList(condition)
+    getRolePageList(condition)
       .then((res) => {
         rolePageData.value = res.data;
       })

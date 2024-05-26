@@ -77,6 +77,7 @@
     "deleteRoleConfirmContent": "Are you sure you want to delete the {0} role?",
     "description": "Role Description",
     "editMenu": "Edit Menu",
+    "loadingRoleList": "Get the list of roles......",
     "name": "Role Name"
   },
   "user": {
@@ -86,7 +87,9 @@
     "editRole": "Edit Role",
     "gender": "Gender",
     "man": "Man",
+    "menuSelect": "Select Menu",
     "nickname": "Nickname",
+    "roleSelect": "Select Role",
     "userAction": "Action User",
     "userDeleteConfirm": "Are you sure you want to delete the {0} user?",
     "userInfo": "User Info",

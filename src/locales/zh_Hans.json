@@ -77,6 +77,7 @@
     "deleteRoleConfirmContent": "确定要删除{0}角色吗？",
     "description": "角色描述",
     "editMenu": "编辑菜单",
+    "loadingRoleList": "获取角色列表中......",
     "name": "角色名称"
   },
   "user": {
@@ -86,7 +87,9 @@
     "editRole": "编辑角色",
     "gender": "性别",
     "man": "男人",
+    "menuSelect": "选择菜单",
     "nickname": "昵称",
+    "roleSelect": "选择角色",
     "userAction": "操作用户",
     "userDeleteConfirm": "确认要删除{0}用户么？",
     "userInfo": "用户信息",
