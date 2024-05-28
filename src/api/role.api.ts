@@ -1,9 +1,11 @@
 import httpApi from '@/plugins/axios';
+import Qs from 'qs';
 
 const API = {
   ROLE_ACTION: '/role',
   GET_ROLE_PAGE_LIST: '/role/getRolePageList',
   GET_ROLE_LIST: '/role/getRoleList',
+  GET_MENUS_BY_ROLE_IDS: '/role/getMenusByRoleIds',
 };
 
 /**
@@ -21,6 +23,18 @@ export const getRolePageList = (condition: Page) => {
  */
 export const getRoleList = () => {
   return httpApi.get<Role[]>(API.GET_ROLE_LIST);
+};
+
+/**
+ * 获取角色列表
+ */
+export const getMenusByRoleIds = (roleIds: string[]) => {
+  return httpApi.get<string[]>(API.GET_MENUS_BY_ROLE_IDS, {
+    params: { roleIds },
+    paramsSerializer: (params) => {
+      return Qs.stringify(params, { arrayFormat: 'repeat' });
+    },
+  });
 };
 
 /**

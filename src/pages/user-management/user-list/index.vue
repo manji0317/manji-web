@@ -93,7 +93,7 @@
   <!-- 用户权限弹窗 -->
   <action-user-dialog v-model="showActionUserDialog" @update:model-value="() => (currentUserId = '')" :user-id="currentUserId" />
 
-  <v-card class="ma-10">
+  <v-card>
     <!-- 表格操作区域 -->
     <template v-slot:text>
       <v-text-field

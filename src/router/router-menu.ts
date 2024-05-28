@@ -9,6 +9,7 @@ export const Menus: CustomRouteRecordRaw[] = [
       id: '1',
       title: 'menu.dashboard',
       icon: 'mdi-view-dashboard',
+      sidebar: true
     },
   },
   {
@@ -18,8 +19,20 @@ export const Menus: CustomRouteRecordRaw[] = [
       id: '2',
       title: 'menu.userManagement',
       icon: 'mdi-account-box',
+      sidebar: true
     },
     children: [
+      {
+        path: '/user-info/:userId',
+        name: 'user-info',
+        component: () => import('@/pages/user-management/user-info/index.vue'),
+        meta: {
+          id: '5',
+          title: 'menu.userInfo',
+          icon: 'mdi-badge-account-outline',
+          sidebar: false
+        },
+      },
       {
         path: '/user-list',
         name: 'user-list',
@@ -27,7 +40,8 @@ export const Menus: CustomRouteRecordRaw[] = [
         meta: {
           id: '3',
           title: 'menu.userList',
-          icon: 'mdi-card-account-details',
+          icon: 'mdi-account-search-outline',
+          sidebar: true
         },
       },
       {
@@ -38,6 +52,7 @@ export const Menus: CustomRouteRecordRaw[] = [
           id: '4',
           title: 'menu.roleList',
           icon: 'mdi-list-box',
+          sidebar: true
         },
       },
     ],

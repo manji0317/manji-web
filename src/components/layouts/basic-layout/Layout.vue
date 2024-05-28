@@ -1,14 +1,19 @@
 <script setup lang="ts">
   import { onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
-  import { useTheme } from 'vuetify';
+  import { useDisplay, useTheme } from 'vuetify';
   import { getUsernameFromToken, removeToken } from '@/utils/TokenUtil';
   import { Loading, Message } from '@/plugins/vuetify-global';
   import { getUserInfo } from '@/api/user.api';
   import { CustomRouteRecordRaw, useRouter } from 'vue-router';
   import { checkRoutePermission, findMenuItemsByIds } from '@/utils/MenuUtil';
   import { useAuthStore } from '@/store/authStore';
+  import { Websocket } from '@/utils/WebsocketUtil';
+  import { useWebsocketStore } from '@/store/websocketStore';
 
+  const websocketStore = useWebsocketStore();
+
+  const { mobile } = useDisplay();
   const themeInstance = useTheme();
   const { t, locale } = useI18n();
   const router = useRouter();
@@ -16,21 +21,14 @@
   // 用户菜单数据
   const userMenus = ref<CustomRouteRecordRaw[]>([]);
   // 是否展开侧边菜单
-  const sidebarDrawer = ref(false);
-  // 主题数据
-  const themes = [
-    { title: t('common.light'), icon: 'mdi-weather-sunny', value: 'light' },
-    { title: t('common.dark'), icon: 'mdi-weather-night', value: 'dark' },
-  ];
+  const sidebarDrawer = ref(true);
+  const rail = ref(false);
+
   // 切换主题
-  const handleChangeTheme = (theme: string) => {
-    themeInstance.global.name.value = theme;
+  const handleChangeTheme = () => {
+    themeInstance.global.name.value = themeInstance.global.name.value === 'dark' ? 'light' : 'dark';
   };
-  // 国际化数据
-  const locales = [
-    { title: t('common.english'), value: 'en-US' },
-    { title: t('common.simplifiedChinese'), value: 'zh-Hans' },
-  ];
+
   // 切换国际化
   const handleChangeLocale = (value: string) => {
     const storageLocale = localStorage.getItem('locale');
@@ -39,6 +37,20 @@
     }
     locale.value = localStorage.getItem('locale') || value;
   };
+
+  // 处理点击用户信息
+  const handleClickUser = () => {
+    // 跳转到用户信息页面，携带userId参数
+    router.push({
+      name: 'user-info',
+      params: {
+        userId: authStore.id,
+      },
+    });
+  };
+
+  // 加载消息通知等信息
+  const handleLoadNotifications = () => {};
 
   // 组件挂载成功之后，处理菜单数据
   onMounted(() => {
@@ -55,17 +67,28 @@
     getUserInfo(username)
       .then((res) => {
         // 模拟后台返回可访问的菜单数据
-        const userMenuIds = res.data.menuIds || ['1', '2', '3', '4'];
-        // TODO 此处模拟后台返回菜单数据，实际开发中，后台返回菜单数据，前端根据菜单数据渲染菜单。
-        authStore.menuIds = userMenuIds;
+        const userMenuIds = res.data.menus || [];
+        authStore.menus = userMenuIds;
+        authStore.id = res.data.id;
+        authStore.nickname = res.data.nickname;
+        authStore.username = res.data.username;
+        authStore.email = res.data.email;
+        authStore.phone = res.data.phone;
+        authStore.gender = res.data.gender;
+        authStore.birthday = res.data.birthday;
+        authStore.avatar = res.data.avatar;
+        authStore.status = res.data.status;
 
         // 过滤出来用户可以访问的菜单
         userMenus.value = findMenuItemsByIds(userMenuIds);
 
         // 判断用户是否有权限访问该页面，主要防止直接通过浏览器输入栏跳转
-        let routePermission = checkRoutePermission(authStore.menuIds, router.currentRoute.value.meta.id);
+        let routePermission = checkRoutePermission(authStore.menus, router.currentRoute.value.meta.id);
         if (!routePermission) {
           router.push('/403');
+        } else {
+          // 启动websocket
+          Websocket.connect(username);
         }
       })
       .finally(() => Loading.close());
@@ -74,9 +97,35 @@
 
 <template>
   <v-app>
-    <v-navigation-drawer :rail="sidebarDrawer" permanent expand-on-hover width="350">
-      <!-- 菜单区域 -->
+    <!-- 侧边栏菜单展示区域 -->
+    <v-navigation-drawer v-model="sidebarDrawer" :rail="rail" width="300">
       <v-list nav>
+        <!-- 用户信息 -->
+        <v-list-item :prepend-avatar="authStore.avatar" :subtitle="authStore.email" :title="authStore.nickname" @click="handleClickUser">
+          <template #append>
+            <!-- 国际化切换 -->
+            <v-menu location="right" width="169">
+              <template v-slot:activator="{ props }">
+                <v-btn icon="mdi-translate" v-bind="props" variant="text" />
+              </template>
+              <v-list density="compact" rounded="lg">
+                <v-list-subheader>{{ $t('common.languageSwitch') }}</v-list-subheader>
+                <v-list-item rounded="lg" @click="handleChangeLocale('en-US')">
+                  <v-list-item-title>
+                    {{ $t('common.english') }}
+                  </v-list-item-title>
+                </v-list-item>
+                <v-list-item rounded="lg" @click="handleChangeLocale('zh-Hans')">
+                  <v-list-item-title> {{ $t('common.simplifiedChinese') }}</v-list-item-title>
+                </v-list-item>
+              </v-list>
+            </v-menu>
+          </template>
+        </v-list-item>
+
+        <v-divider></v-divider>
+
+        <!-- 菜单区域 -->
         <template v-for="item in userMenus" :key="item.meta.id">
           <!-- 是否有子菜单 -->
           <NavCollapse :item="item" v-if="item.children" />
@@ -85,44 +134,39 @@
           <NavItem :item="item" v-else />
         </template>
       </v-list>
+
+      <!-- 登出 -->
+      <template #append>
+        <div class="pa-2">
+          <v-btn variant="tonal" prepend-icon="mdi-logout-variant" color="primary" block :text="!rail ? $t('common.logout') : ''" />
+        </div>
+      </template>
     </v-navigation-drawer>
 
-    <v-app-bar>
-      <v-app-bar-nav-icon @click="sidebarDrawer = !sidebarDrawer" />
+    <v-app-bar elevation="0">
+      <v-app-bar-nav-icon @click="sidebarDrawer = !sidebarDrawer" v-if="mobile" />
+      <v-app-bar-nav-icon @click="rail = !rail" v-else />
       <template v-slot:append>
         <!-- 主题切换 -->
-        <v-menu location="bottom">
-          <template v-slot:activator="{ props }">
-            <v-btn icon="mdi-theme-light-dark" v-bind="props" />
-          </template>
-          <v-list density="compact" rounded="lg">
-            <v-list-subheader>{{ $t('common.themeSwitching') }}</v-list-subheader>
-            <v-list-item v-for="(item, index) in themes" :key="index" rounded="lg" @click="handleChangeTheme(item.value)">
-              <template v-slot:prepend>
-                <v-icon :icon="item.icon" />
-              </template>
-              <v-list-item-title v-text="item.title" />
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <v-btn stacked :color="themeInstance.global.name.value === 'light' ? 'orange' : 'red'" @click="handleChangeTheme">
+          <v-icon size="30">
+            {{ themeInstance.global.name.value === 'light' ? 'mdi-weather-night' : 'mdi-white-balance-sunny' }}
+          </v-icon>
+        </v-btn>
 
-        <!-- 国际化切换 -->
-        <v-menu location="bottom">
-          <template v-slot:activator="{ props }">
-            <v-btn icon="mdi-translate-variant" v-bind="props" />
-          </template>
-          <v-list density="compact" rounded="lg">
-            <v-list-subheader>{{ $t('common.languageSwitch') }}</v-list-subheader>
-            <v-list-item v-for="(item, index) in locales" :key="index" rounded="lg" @click="handleChangeLocale(item.value)">
-              <v-list-item-title v-text="item.title" />
-            </v-list-item>
-          </v-list>
-        </v-menu>
+        <!-- 消息通知 -->
+        <v-btn stacked @click="handleLoadNotifications">
+          <v-badge dot :color="websocketStore.systemNotice > 0 ? 'error' : 'transparent'">
+            <v-icon size="30" icon="mdi-bell-outline" />
+          </v-badge>
+        </v-btn>
       </template>
     </v-app-bar>
 
-    <v-main>
-      <router-view />
+    <v-main scrollable>
+      <v-sheet class="ma-10">
+        <router-view />
+      </v-sheet>
     </v-main>
   </v-app>
 </template>

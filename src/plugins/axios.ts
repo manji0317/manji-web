@@ -19,7 +19,7 @@ const httpApi = axios.create({
   timeout: 10000,
   paramsSerializer: (params) => {
     return Qs.stringify(params, {encode: true, allowDots: true, arrayFormat: 'indices'});
-  }
+  },
 });
 
 // 添加请求拦截器

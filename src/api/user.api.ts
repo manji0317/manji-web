@@ -30,7 +30,7 @@ export const deleteUserById = (userId: string) => {
 };
 
 /**
- * 根据用户ID删除用户
+ * 根据用户ID更新用户
  */
 export const updateUserById = (userId: string, data: Partial<SysUser>) => {
   return httpApi.patch(`${API.USER_ACTION}${userId}`, data);

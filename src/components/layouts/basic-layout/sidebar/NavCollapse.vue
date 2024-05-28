@@ -14,17 +14,17 @@
 </script>
 
 <template>
-  <v-list-group>
+  <v-list-group v-if="item.meta.sidebar">
     <template v-slot:activator="{ props }">
-      <v-list-item v-bind="props" rounded class="mb-1">
+      <v-list-item v-bind="props" rounded>
         <!-- 图标  -->
         <template v-slot:prepend>
           <v-icon :icon="item.meta.icon" />
         </template>
         <!---菜单名字  -->
-        <v-list-item-title v-text="$t(item.meta.title)" class="mr-auto"/>
+        <v-list-item-title v-text="$t(item.meta.title)" />
         <!-- 副标题 -->
-        <v-list-item-subtitle v-if="item.meta.subCaption" class="text-caption mt-n1">
+        <v-list-item-subtitle v-if="item.meta.subCaption" >
           {{ item.meta.subCaption }}
         </v-list-item-subtitle>
       </v-list-item>

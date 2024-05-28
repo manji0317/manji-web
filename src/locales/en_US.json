@@ -37,11 +37,13 @@
     "languageSwitch": "Language switch",
     "light": "Light",
     "loadingText": "Loading ...",
+    "logout": "Logout",
     "next": "Next",
     "phone": "Phone",
     "pleaseInput": "Please input {0}",
     "pleaseSelect": "Please select {0}",
     "previous": "Previous",
+    "queryFail": "Query Fail",
     "saveText": "Save",
     "simplifiedChinese": "Simplified Chinese",
     "status": "Status",
@@ -68,6 +70,7 @@
   "menu": {
     "dashboard": "Dashboard",
     "roleList": "Role List",
+    "userInfo": "User Info",
     "userList": "User List",
     "userManagement": "User Management"
   },
@@ -78,7 +81,8 @@
     "description": "Role Description",
     "editMenu": "Edit Menu",
     "loadingRoleList": "Get the list of roles......",
-    "name": "Role Name"
+    "name": "Role Name",
+    "queryRoleListFail": "Failed to query role data"
   },
   "user": {
     "addUser": "Add User",

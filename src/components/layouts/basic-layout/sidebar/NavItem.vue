@@ -10,7 +10,7 @@
 </script>
 
 <template>
-  <v-list-item :to="item.path">
+  <v-list-item :to="item.path" v-if="item.meta.sidebar">
     <template v-slot:prepend>
       <v-icon :icon="item.meta.icon" />
     </template>

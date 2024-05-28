@@ -34,7 +34,12 @@
         setAccessToken(accessToken);
         setRefreshToken(refreshToken);
         // 路由跳转到首页
-        router.push('/dashboard');
+        const redirect = router.currentRoute.value.query.redirect;
+        if (redirect) {
+          router.push(redirect as string);
+        } else {
+          router.push('/dashboard');
+        }
       })
       .catch(() => {
         // 账号密码错误，将会删除Token

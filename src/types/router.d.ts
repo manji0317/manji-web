@@ -7,6 +7,8 @@ declare module 'vue-router' {
   interface RouteMeta {
     id: string;
     title: string;
+    // 是否在侧边栏显示
+    sidebar: boolean;
     icon?: string;
     // 菜单下面副标题
     subCaption?: string;

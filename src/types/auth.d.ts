@@ -21,8 +21,11 @@ declare interface AuthUser {
   username: string;
   email: string;
   phone: string;
+  gender: number;
+  birthday: string;
   avatar: string;
-  menuIds: string[];
+  status: number;
+  menus: string[];
 }
 
 declare interface SysUser extends Omit<AuthUser, 'menuIds'> {

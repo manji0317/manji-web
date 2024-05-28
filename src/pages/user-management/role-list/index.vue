@@ -75,7 +75,7 @@
     :role-id="currentRoleId"
   />
 
-  <v-card class="ma-10">
+  <v-card>
     <v-card-actions>
       <v-btn prepend-icon="mdi-star-plus" color="primary" @click="handleActionRole('')">{{ $t('role.addRole') }}</v-btn>
     </v-card-actions>

@@ -55,7 +55,7 @@
   });
 
   // 处理下一步
-  const handleNext = handleSubmit((value: Role) => {
+  const handleNext = handleSubmit(() => {
     stepperStep.value += 1;
   });
 

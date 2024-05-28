@@ -4,8 +4,8 @@
   import { object, string } from 'yup';
   import { useI18n } from 'vue-i18n';
   import { toTypedSchema } from '@vee-validate/yup';
-  import { getRoleList } from '@/api/role.api';
-  import { Loading } from '@/plugins/vuetify-global';
+  import { getMenusByRoleIds, getRoleList } from '@/api/role.api';
+  import { Loading, Message } from '@/plugins/vuetify-global';
 
   const { t } = useI18n();
   const emits = defineEmits(['update:modelValue']);
@@ -14,7 +14,7 @@
   const step = ref<number>(1);
 
   // 表单校验
-  const { handleSubmit, defineField, errors } = useForm<SysUser>({
+  const { handleSubmit, defineField, errors, resetForm } = useForm<SysUser>({
     validationSchema: toTypedSchema(
       object({
         nickname: string().required(t('fieldError.required', [t('user.nickname')])),
@@ -59,7 +59,7 @@
   const handleSaveUserInfo = () => {};
 
   // 点击Next处理
-  const handleNext = () => {
+  const handleNext = handleSubmit(() => {
     step.value += 1;
 
     // 加载角色列表
@@ -70,7 +70,40 @@
           roleList.value = res.data;
         }
       })
+      .catch(() => {
+        Message.error(t('role.queryRoleListFail'));
+      })
       .finally(() => Loading.close());
+  });
+
+  // 根据角色查询角色下设置的菜单
+  const handleLoadMenuByRoleId = () => {
+    if (!selectRoleIds.value.length) {
+      selectMenuIds.value = [];
+      return;
+    }
+
+    // 根据角色ID集合查询菜单数据
+    getMenusByRoleIds(selectRoleIds.value)
+      .then((res) => {
+        if (res.status === 200) {
+          selectMenuIds.value = res.data;
+        }
+      })
+      .catch(() => {
+        Message.error(t('common.queryFail'));
+      });
+  };
+
+  // dialog关闭处理
+  const handleClose = () => {
+    // 将数据初始化
+    resetForm();
+    step.value = 1;
+    roleList.value = [];
+    selectMenuIds.value = [];
+    selectRoleIds.value = [];
+    emits('update:modelValue', false);
   };
 </script>
 
@@ -81,7 +114,7 @@
         <v-app-bar-nav-icon :icon="`mdi-numeric-${step}-circle`" readonly color="primary" />
         <v-toolbar-title>{{ step === 1 ? $t('user.userInfo') : $t('role.editMenu') }}</v-toolbar-title>
         <v-toolbar-items>
-          <v-btn @click="emits('update:modelValue')">
+          <v-btn @click="handleClose">
             <v-icon>mdi-close</v-icon>
           </v-btn>
         </v-toolbar-items>
@@ -110,11 +143,8 @@
             <!-- 角色集合 -->
             <v-card-text>
               <h2 class="text-h6 mb-2">{{ $t('user.roleSelect') }}</h2>
-
-              <v-chip-group multiple column v-model="selectRoleIds">
-                <v-chip v-for="(item, index) in roleList" :key="index" color="success" filter>
-                  {{ $t(item.roleName) }}
-                </v-chip>
+              <v-chip-group multiple column v-model="selectRoleIds" @update:model-value="handleLoadMenuByRoleId" mobile>
+                <v-chip v-for="(item, index) in roleList" :key="index" color="success" filter :value="item.id" :text="item.roleName" />
               </v-chip-group>
             </v-card-text>
             <!-- 菜单集合 -->
