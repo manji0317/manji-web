@@ -15,6 +15,7 @@ export const Menus: CustomRouteRecordRaw[] = [
   {
     path: '/user-management',
     name: 'user-management',
+    redirect: '/user-list',
     meta: {
       id: '2',
       title: 'menu.userManagement',

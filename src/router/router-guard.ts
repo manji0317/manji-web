@@ -5,7 +5,7 @@
  * @since 2024年4月26日 14点26分
  */
 
-import { getAccessToken, setAccessToken, verifyToken } from '@/utils/TokenUtil';
+import { getAccessToken, getRefreshToken, setAccessToken, verifyToken } from '@/utils/TokenUtil';
 import { type Router } from 'vue-router';
 import { getWhitePaths } from './router-white';
 import { refreshToken } from '@/api/auth.api';
@@ -31,10 +31,17 @@ export const setBeforeEachGuard = (router: Router) => {
     }
 
     try {
-      // 尝试刷新Token
-      const res = await refreshToken();
-      setAccessToken(res.data.accessToken);
-      next();
+      if (getRefreshToken()) {
+        // 尝试刷新Token
+        const res = await refreshToken();
+        setAccessToken(res.data.accessToken);
+        next();
+      } else {
+        // 如果立案刷新token都没有则直接跳转到登录页面
+        next({
+          path: '/login',
+        });
+      }
     } catch (error) {
       // 刷新Token失败，跳转到登录页
       next({

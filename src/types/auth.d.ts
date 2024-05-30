@@ -28,7 +28,7 @@ declare interface AuthUser {
   menus: string[];
 }
 
-declare interface SysUser extends Omit<AuthUser, 'menuIds'> {
+declare interface SysUser extends Omit<AuthUser, 'menus'> {
   password: string;
   gender: number;
   birthday: string;

@@ -1,7 +1,7 @@
 /**
  * 系统中前端的websocket连接处理工具类，
  *
- * 如果不需要websocket连接:
+ * 如果不需要websocket连接:a
  *    1. 则无需引用此工具类；
  *    2. 删除package.json中的 "socket.io-client" 依赖;
  *    3. 删除配置文件 .env.x 中的VITE_WEBSOCKET_URL和VITE_WEBSOCKET_PATH;

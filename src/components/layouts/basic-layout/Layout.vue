@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { onMounted, ref } from 'vue';
+  import { computed, onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useDisplay, useTheme } from 'vuetify';
   import { getUsernameFromToken, removeToken } from '@/utils/TokenUtil';
@@ -24,6 +24,19 @@
   const sidebarDrawer = ref(true);
   const rail = ref(false);
 
+  // 面包屑数据
+  const breadcrumbs = computed<BreadcrumbItem[]>(() => {
+    const matched = router.currentRoute.value.matched;
+    return matched
+      .filter((r) => r.meta && r.meta.title)
+      .map((r) => {
+        return {
+          to: r.redirect ?? r.path,
+          title: r.meta.title,
+          disabled: false,
+        };
+      });
+  });
   // 切换主题
   const handleChangeTheme = () => {
     themeInstance.global.name.value = themeInstance.global.name.value === 'dark' ? 'light' : 'dark';
@@ -54,6 +67,7 @@
 
   // 组件挂载成功之后，处理菜单数据
   onMounted(() => {
+    console.log(router);
     let username = getUsernameFromToken();
     if (!username) {
       // 没有Username提示错误信息，删除Token数据，跳转到登录页面。
@@ -138,7 +152,14 @@
       <!-- 登出 -->
       <template #append>
         <div class="pa-2">
-          <v-btn variant="tonal" prepend-icon="mdi-logout-variant" color="primary" block :text="!rail ? $t('common.logout') : ''" />
+          <v-btn
+            variant="tonal"
+            prepend-icon="mdi-logout-variant"
+            color="primary"
+            block
+            :text="!rail ? $t('common.logout') : ''"
+            @click="authStore.handleLogout()"
+          />
         </div>
       </template>
     </v-navigation-drawer>
@@ -163,8 +184,17 @@
       </template>
     </v-app-bar>
 
-    <v-main scrollable>
-      <v-sheet class="ma-10">
+    <v-main scrollable translate="yes">
+      <v-breadcrumbs :items="breadcrumbs" density="compact">
+        <template #item="{ item }">
+          <v-chip color="info">
+            <v-breadcrumbs-item :to="item.to">
+              {{ $t(item.title || '') }}
+            </v-breadcrumbs-item>
+          </v-chip>
+        </template>
+      </v-breadcrumbs>
+      <v-sheet class="ma-10" transition="scroll-x-reverse-transition">
         <router-view />
       </v-sheet>
     </v-main>
