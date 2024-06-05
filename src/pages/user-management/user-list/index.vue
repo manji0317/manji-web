@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { TableHeader, UserListCondition } from '@/pages/user-management/user-list/index.data';
   import { reactive, ref } from 'vue';
-  import { deleteUserById, getUserList, updateUserById } from '@/api/user.api';
+  import { deleteUserById, getUserList, actionUser } from '@/api/user.api';
   import { Confirm, Message } from '@/plugins/vuetify-global';
   import { useI18n } from 'vue-i18n';
   import { useDebounceFn } from '@vueuse/core';
@@ -70,7 +70,7 @@
   // 更新用户状态
   const handleUpdateUserStatus = (userId: string, status: number) => {
     userTableLoading.value = true;
-    updateUserById(userId, { status: status === 1 ? 2 : 1 })
+    actionUser(userId, { status: status === 1 ? 2 : 1 })
       .then((res) => {
         if (res.status === 200) {
           Message.success(t('common.actionSuccess'));
@@ -91,7 +91,12 @@
 
 <template>
   <!-- 用户权限弹窗 -->
-  <action-user-dialog v-model="showActionUserDialog" @update:model-value="() => (currentUserId = '')" :user-id="currentUserId" />
+  <action-user-dialog
+    v-model="showActionUserDialog"
+    @update:model-value="() => (currentUserId = '')"
+    :user-id="currentUserId"
+    @reload:user-list="loadUserListData"
+  />
 
   <v-card>
     <!-- 表格操作区域 -->
@@ -104,16 +109,16 @@
         variant="outlined"
         hide-details
         @input="handleSearch"
+        @click:clear="loadUserListData"
       ></v-text-field>
     </template>
 
     <v-card-actions>
-      <v-btn prepend-icon="mdi-star-plus" color="primary" @click="handleActionUser('')">{{ $t('user.addUser') }}</v-btn>
+      <v-btn prepend-icon="mdi-account-plus" color="primary" @click="handleActionUser('')">{{ $t('user.addUser') }} </v-btn>
     </v-card-actions>
 
     <!-- User 数据表格 -->
     <v-data-table-server
-      :header-props="{ align: 'center' }"
       :mobile="$vuetify.display.mobile"
       :headers="TableHeader"
       :items="userPageData.records"
@@ -126,8 +131,23 @@
       :multi-sort="true"
       @update:options="loadUserListData"
     >
+      <template #[`item.userInfo`]="{ item }">
+        <v-list-item :title="item.nickname">
+          <template #prepend>
+            <m-avatar :avatar="item.avatar" :size="40" />
+          </template>
+          <v-icon icon="mdi-calendar-month" />
+          {{ item.birthday }}
+          <v-list-item-subtitle>
+            <a class="v-chip" :href="`mailto:${item.email}`" v-if="!!item.email">
+              <v-icon icon="mdi-email" />
+              {{ item.email }}
+            </a>
+          </v-list-item-subtitle>
+        </v-list-item>
+      </template>
       <template #[`item.avatar`]="{ item }">
-        <m-avatar rounded="0" size="64" :avatar="item.avatar" />
+        <m-avatar :avatar="item.avatar" />
       </template>
       <template #[`item.status`]="{ item }">
         {{ item.status }}

@@ -61,6 +61,10 @@ export class Message {
   static info(text: string) {
     this.updateAndRenderMessageQueue({ text, color: 'info', location: 'top', timeout: 3000 });
   }
+  // 警告
+  static warning(text: string) {
+    this.updateAndRenderMessageQueue({ text, color: 'warning', location: 'top', timeout: 3000 });
+  }
 }
 
 /**

@@ -13,6 +13,7 @@ export const useAuthStore = defineStore('auth', {
     gender: 1,
     birthday: '',
     avatar: '',
+    backgroundImg: '',
     status: 1,
     menus: [],
   }),

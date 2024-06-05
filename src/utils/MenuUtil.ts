@@ -38,6 +38,34 @@ export const findMenuItemsByIds = (ids: string[]): CustomRouteRecordRaw[] => {
 };
 
 /**
+ * 将多级菜单扁平化为单级菜单数组。
+ * @param {CustomRouteRecordRaw[]} menus - 原始的多级菜单数组。
+ * @returns {CustomRouteRecordRaw[]} 扁平化后的单级菜单数组。
+ */
+export const flattenMenu = (menus: CustomRouteRecordRaw[]): CustomRouteRecordRaw[] => {
+  // 扁平化后的新菜单数组
+  const flatMenu: CustomRouteRecordRaw[] = [];
+  /**
+   * 递归扁平化菜单数组。
+   * @param {CustomRouteRecordRaw[]} items - 当前需要扁平化的菜单项数组。
+   */
+  const flatten = (items: CustomRouteRecordRaw[]) => {
+    items.forEach((item) => {
+      // 如果没有子菜单，则直接添加到扁平化菜单数组中
+      if (!item.children) {
+        flatMenu.push(item);
+      } else {
+        // 如果有子菜单，则递归扁平化子菜单
+        flatten(item.children);
+      }
+    });
+  };
+  // 开始扁平化过程
+  flatten(menus);
+  return flatMenu;
+};
+
+/**
  * 判断当前用户跳转的路由是否有权限
  */
 export const checkRoutePermission = (menuIds: string[], currentMenuID: string): boolean => {

@@ -13,6 +13,13 @@
     "ERR_NOT_SUPPORT": "目前不支持此功能。请联系支持人员以获取更多信息。",
     "ETIMEDOUT": "请求超时。请检查您的连接并重试。"
   },
+  "bizError": {
+    "10000": "所修改用户不存在",
+    "10001": "当前密码不正确",
+    "10002": "{}不是唯一值",
+    "10003": "新增用户失败",
+    "10004": "修改用户信息失败"
+  },
   "common": {
     "account": "账号",
     "actionConfirm": "操作确认",
@@ -44,24 +51,35 @@
     "pleaseSelect": "请选择{0}",
     "previous": "上一步",
     "queryFail": "查询失败",
+    "resetText": "重置",
     "saveText": "保存",
     "simplifiedChinese": "简体中文",
     "status": "状态",
     "themeSwitching": "主题切换",
-    "updateLoading": "更新中......"
+    "updateLoading": "更新中......",
+    "uploadFailed": "文件上传失败",
+    "uploadFileSizeLimit": "上传文件大小不能超过{0}",
+    "uploadLoading": "上传中......",
+    "uploadSuccess": "文件上传成功"
   },
   "fieldError": {
     "emailValid": "邮箱格式不正确",
     "max": "{0}不能超过{1}个字符",
+    "min": "{0}最少需要{1}个字符",
     "required": "{0}不能为空"
   },
   "login": {
     "buildingPage": "正在为您构建页面",
+    "confirmPassword": "确认密码",
+    "confirmPasswordError": "新密码与老密码不匹配",
     "forgotPassword": "忘记密码?",
     "login": "登录",
+    "loginFail": "登录失败",
     "loginSuccess": "登录成功",
+    "newPassword": "新密码",
     "password": "密码",
     "register": "注册",
+    "resetYourPassword": "重置您的密码",
     "tokenExpired": "Token令牌过期请重新登录",
     "username": "用户名",
     "usernameOrPasswordError": "用户名或密码错误",
@@ -77,11 +95,16 @@
   "role": {
     "actionRoleTitle": "操作角色",
     "addRole": "创建角色",
+    "basicRoleInfo": "角色基本信息",
+    "configMenu": "配置菜单",
+    "configurePermissions": "配置权限",
     "deleteRoleConfirmContent": "确定要删除{0}角色吗？",
     "description": "角色描述",
     "editMenu": "编辑菜单",
     "loadingRoleList": "获取角色列表中......",
     "name": "角色名称",
+    "noMenuDataText": "您尚未选择任何菜单数据，因此无法修改权限。但是，您仍然可以保存更改。",
+    "noMenuDataTitle": "未选择菜单数据",
     "queryRoleListFail": "查询角色数据失败"
   },
   "user": {
@@ -90,10 +113,14 @@
     "birthday": "生日",
     "editRole": "编辑角色",
     "gender": "性别",
+    "getUserInfoFailed": "获取用户信息失败",
     "man": "男人",
     "menuSelect": "选择菜单",
+    "modifyBackgroundImage": "修改背景图片",
     "nickname": "昵称",
+    "passwordModifiedSuccessfully": "密码修改成功",
     "roleSelect": "选择角色",
+    "setPassword": "设置密码",
     "userAction": "操作用户",
     "userDeleteConfirm": "确认要删除{0}用户么？",
     "userInfo": "用户信息",

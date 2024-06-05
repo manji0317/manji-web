@@ -53,8 +53,9 @@ export const Menus: CustomRouteRecordRaw[] = [
           id: '4',
           title: 'menu.roleList',
           icon: 'mdi-list-box',
-          sidebar: true
-        },
+          sidebar: true,
+          permissions: ['add-role', 'edit-role', 'delete-role']
+        }
       },
     ],
   },

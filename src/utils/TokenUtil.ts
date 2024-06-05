@@ -39,8 +39,8 @@ export const verifyToken = (token: string): boolean => {
   }
 };
 
-// 解析Token获取用户username
-export const getUsernameFromToken = (): string => {
+// 解析Token获取用户UserId
+export const getUserIdFromToken = (): string => {
   let accessToken = getAccessToken();
 
   if (!accessToken) return '';

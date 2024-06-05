@@ -1,12 +1,13 @@
 <script lang="ts" setup>
   defineProps({
     avatar: String,
+    size: { type: Number, default: 64 },
   });
 </script>
 
 <template>
-  <v-avatar v-bind="$attrs" class="ma-1">
-    <v-img v-if="!!avatar" :lazy-src="avatar" :src="avatar" height="48" cover>
+  <v-avatar v-bind="$attrs" class="ma-1" :size="size" >
+    <v-img v-if="!!avatar" :lazy-src="avatar" :src="avatar" :height="size" cover>
       <!-- 图片加载等待 -->
       <template #placeholder>
         <v-row align="center" justify="center" class="fill-height ma-0">

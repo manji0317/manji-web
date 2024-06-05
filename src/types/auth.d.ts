@@ -24,14 +24,18 @@ declare interface AuthUser {
   gender: number;
   birthday: string;
   avatar: string;
+  backgroundImg: string;
   status: number;
   menus: string[];
 }
 
 declare interface SysUser extends Omit<AuthUser, 'menus'> {
   password: string;
-  gender: number;
-  birthday: string;
-  status: number;
   createTime: string;
+}
+
+declare interface UserImg {
+  userId: string,
+  uploadType: UploadPath,
+  file: File | File[],
 }

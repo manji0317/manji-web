@@ -2,7 +2,7 @@
   import { computed, onMounted, ref } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useDisplay, useTheme } from 'vuetify';
-  import { getUsernameFromToken, removeToken } from '@/utils/TokenUtil';
+  import { getUserIdFromToken, removeToken } from '@/utils/TokenUtil';
   import { Loading, Message } from '@/plugins/vuetify-global';
   import { getUserInfo } from '@/api/user.api';
   import { CustomRouteRecordRaw, useRouter } from 'vue-router';
@@ -37,6 +37,7 @@
         };
       });
   });
+
   // 切换主题
   const handleChangeTheme = () => {
     themeInstance.global.name.value = themeInstance.global.name.value === 'dark' ? 'light' : 'dark';
@@ -68,8 +69,8 @@
   // 组件挂载成功之后，处理菜单数据
   onMounted(() => {
     console.log(router);
-    let username = getUsernameFromToken();
-    if (!username) {
+    let userId = getUserIdFromToken();
+    if (!userId) {
       // 没有Username提示错误信息，删除Token数据，跳转到登录页面。
       removeToken();
       Message.error(t('login.usernameRetrievalError'));
@@ -78,7 +79,7 @@
     Loading.loading(t('login.buildingPage'));
 
     // 获取用户数据（配置的菜单数据、用户基本信息）
-    getUserInfo(username)
+    getUserInfo(userId)
       .then((res) => {
         // 模拟后台返回可访问的菜单数据
         const userMenuIds = res.data.menus || [];
@@ -102,7 +103,7 @@
           router.push('/403');
         } else {
           // 启动websocket
-          Websocket.connect(username);
+          Websocket.connect(userId);
         }
       })
       .finally(() => Loading.close());
@@ -184,7 +185,7 @@
       </template>
     </v-app-bar>
 
-    <v-main scrollable translate="yes">
+    <v-main scrollable>
       <v-breadcrumbs :items="breadcrumbs" density="compact">
         <template #item="{ item }">
           <v-chip color="info">
@@ -194,9 +195,14 @@
           </v-chip>
         </template>
       </v-breadcrumbs>
-      <v-sheet class="ma-10" transition="scroll-x-reverse-transition">
-        <router-view />
-      </v-sheet>
+
+      <router-view v-slot="{ Component }">
+        <v-fade-transition>
+          <v-container>
+            <component :is="Component" />
+          </v-container>
+        </v-fade-transition>
+      </router-view>
     </v-main>
   </v-app>
 </template>

@@ -6,6 +6,7 @@
   import { login } from '@/api/auth.api';
   import { removeToken, setAccessToken, setRefreshToken } from '@/utils/TokenUtil';
   import { useRouter } from 'vue-router';
+  import { Message } from '@/plugins/vuetify-global';
 
   const { t } = useI18n();
   const router = useRouter();
@@ -44,10 +45,10 @@
       .catch(() => {
         // 账号密码错误，将会删除Token
         removeToken();
+        Message.error(t('login.loginFail'));
       })
       .finally(() => (loading.value = false));
   });
-
 </script>
 
 <template>
@@ -83,7 +84,7 @@
           </div>
           <v-btn block color="primary" @click="handleLogin" :loading="loading">{{ $t('login.login') }}</v-btn>
           <v-card-text class="text-center">
-            <v-btn variant="text" color="blue" append-icon="mdi-chevron-right" >
+            <v-btn variant="text" color="blue" append-icon="mdi-chevron-right">
               {{ $t('login.register') }}
             </v-btn>
           </v-card-text>

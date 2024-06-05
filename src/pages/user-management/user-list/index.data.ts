@@ -8,15 +8,11 @@ const { t } = i18n.global;
  */
 export const TableHeader = computed<TableHeaderType>(() => [
   {
-    title: t('user.avatar'),
-    key: 'avatar',
+    title: t('user.userInfo'),
+    key: 'userInfo',
     sortable: false,
   },
-  {
-    title: t('user.nickname'),
-    key: 'nickname',
-    sortable: false,
-  },
+
   {
     title: t('common.account'),
     key: 'username',
@@ -27,15 +23,7 @@ export const TableHeader = computed<TableHeaderType>(() => [
     key: 'gender',
     sortable: false,
   },
-  {
-    title: t('user.birthday'),
-    key: 'birthday',
-  },
-  {
-    title: t('common.email'),
-    key: 'email',
-    sortable: false,
-  },
+
   {
     title: t('common.phone'),
     key: 'phone',

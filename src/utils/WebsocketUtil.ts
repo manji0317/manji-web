@@ -21,19 +21,19 @@ const socket = io(import.meta.env.VITE_WEBSOCKET_URL, {
 });
 
 export class Websocket {
-  // 链接时候需要将username传递到后端，用来区分用户
-  private static setOpts(username: string) {
+  // 链接时候需要将userId传递到后端，用来区分用户
+  private static setOpts(userId: string) {
     socket.io.opts.query = {
-      username,
+      userId,
     };
   }
 
   /**
    * 连接websocket
-   * @param username 用户名
+   * @param userId 用户ID
    */
-  static connect(username: string) {
-    this.setOpts(username);
+  static connect(userId: string) {
+    this.setOpts(userId);
     socket.on('connect', () => {
       // 系统右上角小铃铛通知
       socket.on('Notifications', (args: number) => {

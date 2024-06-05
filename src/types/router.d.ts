@@ -12,6 +12,8 @@ declare module 'vue-router' {
     icon?: string;
     // 菜单下面副标题
     subCaption?: string;
+    // 菜单中包含的功能
+    permissions?: string[],
   }
 
   interface CustomRouteRecordRaw extends Omit<VueRouteRecordRaw, 'meta' | 'children'> {
