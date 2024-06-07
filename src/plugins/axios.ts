@@ -73,15 +73,21 @@ httpApi.interceptors.response.use(
 
     if (!isRefreshToken) {
       isRefreshToken = true;
-      refreshToken()
-        .then((res) => {
-          setAccessToken(res.data.accessToken);
-          config.headers.Authorization = `Bearer ${res.data.accessToken}`;
-          retryQueue.forEach((fn) => fn(res.data.accessToken));
-          retryQueue = [];
-          return httpApi(config);
-        })
-        .finally(() => (isRefreshToken = false));
+      try {
+        const res = await refreshToken();
+        setAccessToken(res.data.accessToken);
+        config.headers.Authorization = `Bearer ${res.data.accessToken}`;
+        retryQueue.forEach((fn) => fn(res.data.accessToken));
+        retryQueue = [];
+        return await httpApi(config);
+      } catch (refreshError) {
+        removeToken();
+        Message.error(t('login.tokenExpired'));
+        await router.push('/login');
+        return Promise.reject(refreshError);
+      } finally {
+        isRefreshToken = false;
+      }
     } else {
       // 如果正在刷新Token，将请求重新加入队列
       return new Promise((resolve) => {

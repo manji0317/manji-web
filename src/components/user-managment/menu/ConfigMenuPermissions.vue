@@ -25,7 +25,7 @@
   <v-item-group>
     <v-container>
       <v-row dense>
-        <v-col v-for="item in flattenMenus" :key="item.meta.id" cols="12" sm="6" md="4">
+        <v-col v-for="item in flattenMenus" :key="item.meta.id" cols="12" sm="6" md="4" class="d-flex">
           <v-card>
             <v-toolbar :title="$t(item.meta.title)">
               <template #prepend>

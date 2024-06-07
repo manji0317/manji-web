@@ -11,6 +11,7 @@ declare module 'vue' {
     ActionUserDialog: typeof import('./src/components/user-managment/user/ActionUserDialog.vue')['default']
     ConfigMenuPermissions: typeof import('./src/components/user-managment/menu/ConfigMenuPermissions.vue')['default']
     ConfirmDialog: typeof import('./src/components/common/ConfirmDialog.vue')['default']
+    CtrlK: typeof import('./src/components/ctrl-k/CtrlK.vue')['default']
     ForgotPasswordDialog: typeof import('./src/components/user-managment/user/ForgotPasswordDialog.vue')['default']
     Layout: typeof import('./src/components/layouts/basic-layout/Layout.vue')['default']
     LoadingDialog: typeof import('./src/components/common/LoadingDialog.vue')['default']

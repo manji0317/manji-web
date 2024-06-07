@@ -53,6 +53,7 @@
     "queryFail": "Query Fail",
     "resetText": "Reset",
     "saveText": "Save",
+    "search": "Search",
     "simplifiedChinese": "Simplified Chinese",
     "status": "Status",
     "themeSwitching": "Theme Switching",
@@ -87,25 +88,25 @@
   },
   "menu": {
     "dashboard": "Dashboard",
+    "description": {
+      "dashboard": "Homepage functionality, displaying system operations, key information, etc.",
+      "roleList": "Allows viewing the list of roles in the system and performing add, delete, modify, and configure permissions.",
+      "userInfo": "User information maintenance, maintaining information of the currently logged-in user.",
+      "userList": "Allows viewing the list of users in the system and performing add, delete, modify, search, and assign permissions."
+    },
     "roleList": "Role List",
     "userInfo": "User Info",
     "userList": "User List",
-    "userManagement": "User Management",
-    "description": {
-      "dashboard": "Homepage functionality, displaying system operations, key information, etc.",
-      "userInfo": "User information maintenance, maintaining information of the currently logged-in user.",
-      "userList": "Allows viewing the list of users in the system and performing add, delete, modify, search, and assign permissions.",
-      "roleList": "Allows viewing the list of roles in the system and performing add, delete, modify, and configure permissions."
-    }
+    "userManagement": "User Management"
   },
   "permission": {
     "add_role": "Add Role",
     "add_user": "Add User",
+    "edit_password": "Change Password",
     "edit_role": "Modify Role",
     "edit_user": "Modify User",
     "remove_role": "Delete Role",
     "remove_user": "Delete User",
-    "edit_password": "Change Password",
     "upload_avatar": "Upload avatar",
     "upload_background": "Upload Background"
   },

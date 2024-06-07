@@ -17,10 +17,13 @@ type SnackbarMessage = Omit<
 
 interface SystemStore {
   messageQueue: SnackbarMessage[];
+  // 控制搜索弹窗显示与隐藏
+  ctrlKDialog: boolean;
 }
 
 export const useSystemStore = defineStore('system', {
   state: (): SystemStore => ({
     messageQueue: [],
+    ctrlKDialog: false,
   }),
 });

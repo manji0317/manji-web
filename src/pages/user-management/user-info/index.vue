@@ -6,6 +6,7 @@
   import { useI18n } from 'vue-i18n';
   import { useUserFormValidation } from '@/components/user-managment/user/user.form';
   import defaultBackground from '@/assets/user/default-user-background.png';
+  import checkPermission from "@/utils/PermissionUtil";
 
   const router = useRouter();
   const { t } = useI18n();
@@ -99,14 +100,14 @@
 <template>
   <!-- 忘记密码弹窗 -->
   <forgot-password-dialog v-model="forgotPasswordDialogVisible" :user-id="id" />
-  <v-file-input v-model="file" hide-input accept=".png,.jpg,.jepg" prepend-icon="" ref="fileRef" @update:model-value="handleUploadFile" />
+  <v-file-input v-model="file" hide-input accept=".png,.jpg,.jpeg" prepend-icon="" ref="fileRef" @update:model-value="handleUploadFile" />
 
   <v-card>
     <!-- 用户背景图、上传背景图 Start -->
     <v-img class="align-end text-white" height="200" :src="!!backgroundImg ? backgroundImg : defaultBackground" cover>
       <v-card-title class="d-flex justify-space-between">
         {{ nickname }}
-        <v-btn variant="outlined" density="comfortable" @click="handleSelectFile('user-background')">
+        <v-btn variant="outlined" density="comfortable" @click="handleSelectFile('user-background')" v-if="checkPermission('upload_background', '5')">
           {{ $t('user.modifyBackgroundImage') }}
         </v-btn>
       </v-card-title>

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted, ref, watch, watchEffect } from 'vue';
+  import { computed, onMounted, ref, watch } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useDisplay, useTheme } from 'vuetify';
   import { getUserIdFromToken, removeToken } from '@/utils/TokenUtil';
@@ -10,9 +10,10 @@
   import { useAuthStore } from '@/store/authStore';
   import { Websocket } from '@/utils/WebsocketUtil';
   import { useWebsocketStore } from '@/store/websocketStore';
+  import { useSystemStore } from '@/store/systemStore';
 
   const websocketStore = useWebsocketStore();
-
+  const systemStore = useSystemStore();
   const { mobile } = useDisplay();
   const themeInstance = useTheme();
   const { t, locale } = useI18n();
@@ -178,6 +179,15 @@
     <v-app-bar elevation="0">
       <v-app-bar-nav-icon @click="sidebarDrawer = !sidebarDrawer" v-if="mobile" />
       <v-app-bar-nav-icon @click="rail = !rail" v-else />
+
+      <v-app-bar-title>
+        <v-btn prepend-icon="mdi-magnify" @click="systemStore.ctrlKDialog = true" class="text-medium-emphasis text-body-2 text-capitalize" :text="$t('common.search')">
+          <template #append>
+            <v-chip rounded density="compact" variant="outlined"> CTRL + K</v-chip>
+          </template>
+        </v-btn>
+      </v-app-bar-title>
+
       <template v-slot:append>
         <!-- 主题切换 -->
         <v-btn stacked :color="themeInstance.global.name.value === 'light' ? 'orange' : 'red'" @click="handleChangeTheme">

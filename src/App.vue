@@ -1,4 +1,5 @@
 <template>
+  <ctrl-k />
   <router-view />
 </template>
 
