@@ -46,6 +46,7 @@
     "loadingText": "加载中...",
     "logout": "登出",
     "next": "下一步",
+    "noDescription": "无描述",
     "phone": "电话",
     "pleaseInput": "请输入{0}",
     "pleaseSelect": "请选择{0}",
@@ -90,7 +91,24 @@
     "roleList": "权限列表",
     "userInfo": "用户信息",
     "userList": "用户列表",
-    "userManagement": "用户管理"
+    "userManagement": "用户管理",
+    "description": {
+      "dashboard": "首页功能，展示系统中的运行情况、主要信息等。",
+      "userInfo": "用户信息维护，维护当前登录人的信息。",
+      "userList": "可以查看系统中用户列表，并可以进行增删改查、分配权限。",
+      "roleList": "可以查看系统中角色列表，并可以进行增删改查。配置权限"
+    }
+  },
+  "permission": {
+    "add_role": "添加角色",
+    "add_user": "添加用户",
+    "edit_role": "修改角色",
+    "edit_user": "修改用户",
+    "remove_role": "删除角色",
+    "remove_user": "删除用户",
+    "edit_password": "修改密码",
+    "upload_avatar": "上传头像",
+    "upload_background": "上传背景"
   },
   "role": {
     "actionRoleTitle": "操作角色",
@@ -103,8 +121,8 @@
     "editMenu": "编辑菜单",
     "loadingRoleList": "获取角色列表中......",
     "name": "角色名称",
-    "noMenuDataText": "您尚未选择任何菜单数据，因此无法修改权限。但是，您仍然可以保存更改。",
-    "noMenuDataTitle": "未选择菜单数据",
+    "noPermissionConfig": "无权限可配置",
+    "noPermissionConfigText": "您选择的菜单，没有可以配置的操作权限，但是您仍然可以保存更改。",
     "queryRoleListFail": "查询角色数据失败"
   },
   "user": {

@@ -30,11 +30,6 @@ export const TableHeader = computed<TableHeaderType>(() => [
     sortable: false,
   },
   {
-    title: t('common.status'),
-    key: 'status',
-    sortable: false,
-  },
-  {
     title: t('common.createTime'),
     key: 'createTime',
     minWidth: '180',

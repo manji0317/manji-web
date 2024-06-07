@@ -19,7 +19,6 @@ export const useUserFormValidation = (schema?: ObjectShape, initialValues?: Part
         email: string()
           .required(t('fieldError.required', [t('common.email')]))
           .email(t('fieldError.emailValid')),
-
         ...schema,
       })
     ),

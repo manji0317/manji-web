@@ -15,7 +15,8 @@ export const useAuthStore = defineStore('auth', {
     avatar: '',
     backgroundImg: '',
     status: 1,
-    menus: [],
+    roles: [],
+    permissions: {},
   }),
   getters: {},
   actions: {

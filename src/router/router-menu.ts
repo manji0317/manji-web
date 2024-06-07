@@ -8,6 +8,7 @@ export const Menus: CustomRouteRecordRaw[] = [
     meta: {
       id: '1',
       title: 'menu.dashboard',
+      description: 'menu.description.dashboard',
       icon: 'mdi-view-dashboard',
       sidebar: true
     },
@@ -30,8 +31,10 @@ export const Menus: CustomRouteRecordRaw[] = [
         meta: {
           id: '5',
           title: 'menu.userInfo',
+          description: 'menu.description.userInfo',
           icon: 'mdi-badge-account-outline',
-          sidebar: false
+          sidebar: false,
+          permissions: ['edit_password', 'upload_avatar', 'upload_background', 'edit_user']
         },
       },
       {
@@ -41,8 +44,10 @@ export const Menus: CustomRouteRecordRaw[] = [
         meta: {
           id: '3',
           title: 'menu.userList',
+          description: 'menu.description.userList',
           icon: 'mdi-account-search-outline',
-          sidebar: true
+          sidebar: true,
+          permissions: ['add_user', 'edit_user', 'remove_user']
         },
       },
       {
@@ -52,9 +57,10 @@ export const Menus: CustomRouteRecordRaw[] = [
         meta: {
           id: '4',
           title: 'menu.roleList',
+          description: 'menu.description.roleList',
           icon: 'mdi-list-box',
           sidebar: true,
-          permissions: ['add-role', 'edit-role', 'delete-role']
+          permissions: ['add_role', 'edit_role', 'remove_role']
         }
       },
     ],

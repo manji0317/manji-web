@@ -4,7 +4,6 @@
  * @author 白青东
  * @since 2024年4月26日 14点26分
  */
-
 import { getAccessToken, getRefreshToken, setAccessToken, verifyToken } from '@/utils/TokenUtil';
 import { type Router } from 'vue-router';
 import { getWhitePaths } from './router-white';
@@ -37,7 +36,7 @@ export const setBeforeEachGuard = (router: Router) => {
         setAccessToken(res.data.accessToken);
         next();
       } else {
-        // 如果立案刷新token都没有则直接跳转到登录页面
+        // 如果连刷新token都没有则直接跳转到登录页面
         next({
           path: '/login',
         });

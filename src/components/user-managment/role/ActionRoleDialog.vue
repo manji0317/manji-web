@@ -5,44 +5,17 @@
   import { object, string } from 'yup';
   import { getRoleById, roleAction } from '@/api/role.api';
   import { Message } from '@/plugins/vuetify-global';
-  import MenuTreeview from '@/components/user-managment/MenuTreeview.vue';
-  import { Menus } from '@/router/router-menu';
-  import { flattenMenu } from '@/utils/MenuUtil';
 
   let { t } = useI18n();
+  const emits = defineEmits(['update:modelValue', 'reload:dataList']);
   // 步骤
   const stepperStep = ref<number>(0);
 
-  // 选中的菜单
-  const selectMenuIds = ref<string[]>([]);
+  // 步骤对应的标题
+  const stepTitle = ref<string[]>([t('role.actionRoleTitle'), t('role.configurePermissions')]);
 
-  // 权限数据
-  const menuPermissions = ref<any[]>([]);
-
-  // 根据选中的菜单生成可选权限信息
-  const generatePermissions = () => {
-    if (!selectMenuIds.value.length) {
-      return;
-    }
-
-    // 将菜单数据做扁平化处理
-    let menus = flattenMenu(Menus);
-
-    menuPermissions.value = selectMenuIds.value
-      .map((id) => {
-        const menu = menus.find((menu) => menu.meta.id === id);
-        if (menu && menu.meta.permissions) {
-          return {
-            icon: menu.meta.icon,
-            title: menu.meta.title,
-            permissions: menu.meta.permissions,
-          };
-        }
-        return null;
-      })
-      .filter((item) => item !== null);
-  };
-  const emits = defineEmits(['update:modelValue', 'reload:dataList']);
+  // 记录选中的权限数据
+  const menuPermissions = ref<{ [key: string]: string[] }>({});
 
   const props = defineProps({
     roleId: String,
@@ -78,24 +51,16 @@
             id.value = res.data.id;
             roleName.value = res.data.roleName;
             description.value = res.data.description || '';
-            selectMenuIds.value = res.data.menus || [];
+            menuPermissions.value = res.data.permissions || {};
           }
         })
         .finally(() => (pageLoading.value = false));
     }
   });
 
-  // 步骤对应的标题
-  const stepTitle = ref<string[]>([t('role.actionRoleTitle'), t('role.configurePermissions')]);
-
   // 处理下一步
   const handleNext = handleSubmit(() => {
     stepperStep.value += 1;
-
-    if (stepperStep.value === 1) {
-      // 生成权限数据
-      generatePermissions();
-    }
   });
 
   // dialog关闭处理
@@ -106,18 +71,19 @@
     id.value = '';
     roleName.value = '';
     description.value = '';
-    selectMenuIds.value = [];
+    menuPermissions.value = {};
     emits('update:modelValue', false);
   };
 
   // 角色操作
   const handleActionRole = () => {
     actionLoading.value = true;
+
     roleAction({
       id: id.value,
       roleName: roleName.value,
       description: description.value,
-      menus: selectMenuIds.value,
+      permissions: menuPermissions.value,
     })
       .then((res) => {
         if (res.status === 200) {
@@ -133,7 +99,7 @@
 </script>
 
 <template>
-  <v-dialog persistent max-width="350" width="auto" scrollable>
+  <v-dialog persistent width="auto" scrollable>
     <v-card flat>
       <v-toolbar>
         <template #prepend>
@@ -149,53 +115,24 @@
         </v-toolbar-items>
       </v-toolbar>
 
-      <v-card-text style="height: 450px">
+      <v-card-text class="pa-0">
         <v-window v-model="stepperStep">
-          <v-window-item :value="0">
-            <v-sheet width="500">
-              <v-list-subheader>{{ $t('role.basicRoleInfo') }}</v-list-subheader>
-              <v-text-field :label="$t('role.name')" prepend-inner-icon="mdi-form-textbox" v-model="roleName" :error-messages="errors.roleName" />
-              <v-textarea
-                :label="$t('role.description')"
-                clearable
-                counter
-                prepend-inner-icon="mdi-white-balance-incandescent"
-                v-model="description"
-                :error-messages="errors.description"
-              />
-              <v-list-subheader>{{ $t('role.configMenu') }}</v-list-subheader>
-              <menu-treeview v-model:selected="selectMenuIds" class="pa-0" />
-            </v-sheet>
-          </v-window-item>
-          <v-window-item :value="1">
-            <v-empty-state
-              icon="mdi-select-remove"
-              color="info"
-              :title="$t('role.noMenuDataTitle')"
-              :text="$t('role.noMenuDataText')"
-              v-if="!selectMenuIds.length || !menuPermissions.length"
+          <!-- 编辑角色信息 -->
+          <v-window-item :value="0" class="pa-5">
+            <v-text-field :label="$t('role.name')" prepend-inner-icon="mdi-form-textbox" v-model="roleName" :error-messages="errors.roleName" />
+            <v-textarea
+              :label="$t('role.description')"
+              clearable
+              counter
+              prepend-inner-icon="mdi-white-balance-incandescent"
+              v-model="description"
+              :error-messages="errors.description"
             />
+          </v-window-item>
 
-            <v-sheet width="500" v-else>
-              <v-list density="compact">
-                <v-list-item v-for="(item, index) in menuPermissions" :key="index">
-                  <v-list-item-subtitle>
-                    <v-icon :icon="item.icon" v-if="item.icon" />
-                    {{ $t(item.title) }}
-                  </v-list-item-subtitle>
-                  <v-chip-group multiple>
-                    <v-chip
-                      v-for="(permission, index) in item.permissions"
-                      :key="index"
-                      color="success"
-                      filter
-                      :value="permission"
-                      :text="permission"
-                    />
-                  </v-chip-group>
-                </v-list-item>
-              </v-list>
-            </v-sheet>
+          <!-- 编辑权限信息 -->
+          <v-window-item :value="1">
+            <config-menu-permissions class="py-2 px-5" :menu-permissions="menuPermissions" />
           </v-window-item>
         </v-window>
       </v-card-text>

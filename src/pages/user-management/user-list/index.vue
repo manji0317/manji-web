@@ -67,21 +67,6 @@
     loadUserListData();
   }, 1000);
 
-  // 更新用户状态
-  const handleUpdateUserStatus = (userId: string, status: number) => {
-    userTableLoading.value = true;
-    actionUser(userId, { status: status === 1 ? 2 : 1 })
-      .then((res) => {
-        if (res.status === 200) {
-          Message.success(t('common.actionSuccess'));
-          loadUserListData();
-        }
-      })
-      .finally(() => {
-        userTableLoading.value = false;
-      });
-  };
-
   // 操作用户
   const handleActionUser = (userId: string) => {
     showActionUserDialog.value = true;
@@ -168,16 +153,6 @@
       </template>
       <template #[`item.phone`]="{ item }">
         <a class="v-chip v-btn" :href="`tel:${item.phone}`" v-if="!!item.phone">{{ item.phone }}</a>
-      </template>
-      <template #[`item.status`]="{ item }">
-        <v-switch
-          :model-value="item.status === 1"
-          color="success"
-          hide-details
-          inset
-          :class="{ 'd-flex justify-end': $vuetify.display.mobile }"
-          @click="handleUpdateUserStatus(item.id, item.status)"
-        />
       </template>
 
       <template #[`item.actions`]="{ item }">

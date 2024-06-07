@@ -6,7 +6,6 @@ const API = {
   USER_ACTION: '/user/',
   GET_USER_LIST: '/user/getUserList',
   USER_UPDATE_PASSWORD: '/user/updatePassword/',
-
   UPDATE_USER_IMG: '/file/updateUserImg/',
 };
 

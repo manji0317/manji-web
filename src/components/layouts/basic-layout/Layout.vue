@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { computed, onMounted, ref } from 'vue';
+  import { computed, onMounted, ref, watch, watchEffect } from 'vue';
   import { useI18n } from 'vue-i18n';
   import { useDisplay, useTheme } from 'vuetify';
   import { getUserIdFromToken, removeToken } from '@/utils/TokenUtil';
@@ -66,6 +66,15 @@
   // 加载消息通知等信息
   const handleLoadNotifications = () => {};
 
+  // 监听路由变化，判断用户是否有权限访问该页面
+  watch(router.currentRoute, (to) => {
+    const userMenuIds = Object.keys(authStore.permissions || {});
+    let routePermission = checkRoutePermission(userMenuIds, to.meta.id);
+    if (!routePermission) {
+      router.push('/403');
+    }
+  });
+
   // 组件挂载成功之后，处理菜单数据
   onMounted(() => {
     console.log(router);
@@ -82,8 +91,7 @@
     getUserInfo(userId)
       .then((res) => {
         // 模拟后台返回可访问的菜单数据
-        const userMenuIds = res.data.menus || [];
-        authStore.menus = userMenuIds;
+        const userMenuIds = Object.keys(res.data.permissions || {});
         authStore.id = res.data.id;
         authStore.nickname = res.data.nickname;
         authStore.username = res.data.username;
@@ -93,12 +101,14 @@
         authStore.birthday = res.data.birthday;
         authStore.avatar = res.data.avatar;
         authStore.status = res.data.status;
+        authStore.roles = res.data.roles;
+        authStore.permissions = res.data.permissions;
 
         // 过滤出来用户可以访问的菜单
         userMenus.value = findMenuItemsByIds(userMenuIds);
 
         // 判断用户是否有权限访问该页面，主要防止直接通过浏览器输入栏跳转
-        let routePermission = checkRoutePermission(authStore.menus, router.currentRoute.value.meta.id);
+        let routePermission = checkRoutePermission(userMenuIds, router.currentRoute.value.meta.id);
         if (!routePermission) {
           router.push('/403');
         } else {

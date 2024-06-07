@@ -8,33 +8,36 @@ import { Menus } from '@/router/router-menu';
  */
 export const findMenuItemsByIds = (ids: string[]): CustomRouteRecordRaw[] => {
   // 2. 定义一个过滤函数，用于递归处理菜单项
-  const filterItems = (menu: CustomRouteRecordRaw): CustomRouteRecordRaw | null => {
-    // menu是Menus中的每一项菜单，判断当前菜单是否在ids中，如果不在返回null
-    if (!ids.includes(menu.meta.id)) return null;
+  const filterItems = (menu: CustomRouteRecordRaw, path: CustomRouteRecordRaw[] = []): CustomRouteRecordRaw | null => {
+    // path是当前菜单的路径栈，用于追踪父菜单
+    const currentPath = [...path, menu];
 
-    // 如果在ids中，则创建一个新的对象，并递归处理子菜单项
-    const filteredMenu: CustomRouteRecordRaw = { ...menu };
+    // 如果在ids中，或者任何子菜单在ids中，则返回true
+    const isSelected = ids.includes(menu.meta.id);
 
     // 如果有子菜单，则递归处理子菜单项
+    let filteredChildren: CustomRouteRecordRaw[] = [];
     if (menu.children) {
-      // 递归处理子菜单项，并过滤掉null的项
-      const filteredChildren = menu.children.map(filterItems).filter(Boolean) as CustomRouteRecordRaw[];
+      filteredChildren = menu.children.map(child => filterItems(child, currentPath)).filter(Boolean) as CustomRouteRecordRaw[];
+    }
 
-      // 如果子菜单项不为空，则将子菜单项赋值给filteredMenu
+    // 如果当前菜单被选中，或者有子菜单被选中
+    if (isSelected || filteredChildren.length) {
+      // 创建一个新的对象
+      const filteredMenu: CustomRouteRecordRaw = { ...menu };
       if (filteredChildren.length) {
         filteredMenu.children = filteredChildren;
       } else {
-        // 如果子菜单项为空，则删除children属性
         delete filteredMenu.children;
       }
+      return filteredMenu;
     }
 
-    // 返回处理后的菜单项
-    return filteredMenu;
+    return null;
   };
 
   // 1. 先执行此处filterItems
-  return Menus.map(filterItems).filter(Boolean) as CustomRouteRecordRaw[];
+  return Menus.map(menu => filterItems(menu)).filter(Boolean) as CustomRouteRecordRaw[];
 };
 
 /**

@@ -1,14 +1,12 @@
 <script lang="ts" setup>
   import { useRouter } from 'vue-router';
   import { onMounted, ref } from 'vue';
-  import { useDisplay } from 'vuetify';
   import { getUserInfo, actionUser, updateUserImg } from '@/api/user.api';
   import { Loading, Message } from '@/plugins/vuetify-global';
   import { useI18n } from 'vue-i18n';
   import { useUserFormValidation } from '@/components/user-managment/user/user.form';
   import defaultBackground from '@/assets/user/default-user-background.png';
 
-  const { mobile } = useDisplay();
   const router = useRouter();
   const { t } = useI18n();
 
@@ -73,7 +71,6 @@
       Message.warning(t('common.uploadFileSizeLimit', ['3MB']));
       return;
     }
-
     Loading.loading(t('common.uploadLoading'));
     updateUserImg(id.value, {
       uploadType: uploadPath.value,
@@ -83,24 +80,29 @@
         if (res.status === 200) {
           Message.success(t('common.uploadSuccess'));
           setUserInfo(id.value);
-          file.value = undefined;
         }
       })
       .catch(() => Message.error(t('common.uploadFailed')))
-      .finally(() => Loading.close());
+      .finally(() => {
+        Loading.close();
+        file.value = undefined;
+      });
   };
 
   onMounted(() => {
+    // 根据路由参数获取用户信息
     const { userId } = router.currentRoute.value.params;
     setUserInfo(userId as string);
   });
 </script>
 
 <template>
+  <!-- 忘记密码弹窗 -->
   <forgot-password-dialog v-model="forgotPasswordDialogVisible" :user-id="id" />
   <v-file-input v-model="file" hide-input accept=".png,.jpg,.jepg" prepend-icon="" ref="fileRef" @update:model-value="handleUploadFile" />
 
   <v-card>
+    <!-- 用户背景图、上传背景图 Start -->
     <v-img class="align-end text-white" height="200" :src="!!backgroundImg ? backgroundImg : defaultBackground" cover>
       <v-card-title class="d-flex justify-space-between">
         {{ nickname }}
@@ -109,8 +111,11 @@
         </v-btn>
       </v-card-title>
     </v-img>
+    <!-- 用户背景图、上传背景图 End -->
 
+    <!-- 用户信息展示 Start -->
     <v-card-text>
+      <!-- 用户头像展示区域 Start -->
       <v-row align="center" justify="center" class="mb-10">
         <m-avatar
           :avatar="avatar"
@@ -119,6 +124,7 @@
           @click="handleSelectFile('user-avatar')"
         />
       </v-row>
+      <!-- 用户头像展示区域 End -->
 
       <v-row>
         <v-col cols="12" lg="4">
@@ -154,18 +160,23 @@
         </v-col>
       </v-row>
     </v-card-text>
+    <!-- 用户信息展示 End -->
 
     <v-divider></v-divider>
 
+    <!-- 操作区域 Start -->
     <v-card-actions>
-      <v-btn :block="mobile" color="primary" variant="flat" @click="handleActionUser">
+      <!-- 保存用户信息 -->
+      <v-btn color="primary" variant="flat" @click="handleActionUser">
         {{ $t('common.saveText') }}
       </v-btn>
       <v-spacer />
-      <v-btn :block="mobile" color="warning" variant="flat" @click.stop="forgotPasswordDialogVisible = true">
+      <!-- 忘记密码 -->
+      <v-btn color="warning" variant="flat" @click.stop="forgotPasswordDialogVisible = true">
         {{ $t('login.forgotPassword') }}
       </v-btn>
     </v-card-actions>
+    <!-- 操作区域 End -->
   </v-card>
 </template>
 

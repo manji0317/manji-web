@@ -45,6 +45,7 @@
     "loadingText": "Loading ...",
     "logout": "Logout",
     "next": "Next",
+    "noDescription": "No description",
     "phone": "Phone",
     "pleaseInput": "Please input {0}",
     "pleaseSelect": "Please select {0}",
@@ -89,7 +90,24 @@
     "roleList": "Role List",
     "userInfo": "User Info",
     "userList": "User List",
-    "userManagement": "User Management"
+    "userManagement": "User Management",
+    "description": {
+      "dashboard": "Homepage functionality, displaying system operations, key information, etc.",
+      "userInfo": "User information maintenance, maintaining information of the currently logged-in user.",
+      "userList": "Allows viewing the list of users in the system and performing add, delete, modify, search, and assign permissions.",
+      "roleList": "Allows viewing the list of roles in the system and performing add, delete, modify, and configure permissions."
+    }
+  },
+  "permission": {
+    "add_role": "Add Role",
+    "add_user": "Add User",
+    "edit_role": "Modify Role",
+    "edit_user": "Modify User",
+    "remove_role": "Delete Role",
+    "remove_user": "Delete User",
+    "edit_password": "Change Password",
+    "upload_avatar": "Upload avatar",
+    "upload_background": "Upload Background"
   },
   "role": {
     "actionRoleTitle": "Action Role",
@@ -102,8 +120,8 @@
     "editMenu": "Edit Menu",
     "loadingRoleList": "Get the list of roles......",
     "name": "Role Name",
-    "noMenuDataText": "You haven't selected any menu data, so you cannot modify permissions. However, you can still save your changes.",
-    "noMenuDataTitle": "No menu data selected",
+    "noPermissionConfig": "No permission configuration",
+    "noPermissionConfigText": "The menu you selected does not have permissions to configure, but you can still save changes.",
     "queryRoleListFail": "Failed to query role data"
   },
   "user": {
