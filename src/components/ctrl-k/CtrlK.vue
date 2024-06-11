@@ -79,11 +79,11 @@
   <v-dialog v-model="systemStore.ctrlKDialog" width="450" scrollable height="500">
     <v-card>
       <v-card-title>
-        <v-text-field label="Search" prepend-inner-icon="mdi-magnify" clearable append-inner-icon="mdi-keyboard-esc" v-model="search" autofocus/>
+        <v-text-field :label="$t('common.search')" prepend-inner-icon="mdi-magnify" clearable append-inner-icon="mdi-keyboard-esc" v-model="search" autofocus/>
       </v-card-title>
 
       <v-card-text>
-        <v-card title="Search Results" prepend-icon="mdi-magnify-expand" v-if="search">
+        <v-card :title="$t('layout.searchResults')" prepend-icon="mdi-magnify-expand" v-if="search">
           <v-list>
             <v-list-item
               v-for="(item, index) in searchResult"
@@ -95,7 +95,7 @@
             />
           </v-list>
         </v-card>
-        <v-card title="Recent searches" prepend-icon="mdi-history" v-else>
+        <v-card :title="$t('layout.recentSearch')" prepend-icon="mdi-history" v-else>
           <v-list>
             <v-list-item
               v-for="(item, index) in recentSearches"

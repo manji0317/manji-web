@@ -69,6 +69,10 @@
     "min": "{0} requires a minimum of {1} characters",
     "required": "{0} cannot be empty"
   },
+  "layout": {
+    "recentSearch": "Recent search",
+    "searchResults": "Search Results"
+  },
   "login": {
     "buildingPage": "Building the page for you",
     "confirmPassword": "Confirm Password",

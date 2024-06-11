@@ -6,7 +6,7 @@
   import { useI18n } from 'vue-i18n';
   import { useUserFormValidation } from '@/components/user-managment/user/user.form';
   import defaultBackground from '@/assets/user/default-user-background.png';
-  import checkPermission from "@/utils/PermissionUtil";
+  import checkPermission from '@/utils/PermissionUtil';
 
   const router = useRouter();
   const { t } = useI18n();
@@ -104,7 +104,7 @@
 
   <v-card>
     <!-- 用户背景图、上传背景图 Start -->
-    <v-img class="align-end text-white" height="200" :src="!!backgroundImg ? backgroundImg : defaultBackground" cover>
+    <v-img class="align-end text-white" height="300" :src="!!backgroundImg ? backgroundImg : defaultBackground" cover>
       <v-card-title class="d-flex justify-space-between">
         {{ nickname }}
         <v-btn variant="outlined" density="comfortable" @click="handleSelectFile('user-background')" v-if="checkPermission('upload_background', '5')">

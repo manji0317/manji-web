@@ -70,6 +70,10 @@
     "min": "{0}最少需要{1}个字符",
     "required": "{0}不能为空"
   },
+  "layout": {
+    "recentSearch": "最近搜索",
+    "searchResults": "搜索结果"
+  },
   "login": {
     "buildingPage": "正在为您构建页面",
     "confirmPassword": "确认密码",
